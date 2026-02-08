@@ -1,7 +1,15 @@
-# Montimage Skills
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="assets/logo/logo-white.svg">
+    <source media="(prefers-color-scheme: light)" srcset="assets/logo/logo-black.svg">
+    <img src="assets/logo/logo-black.svg" alt="Montimage Skills" width="400">
+  </picture>
+</p>
 
-[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](LICENSE)
-[![Skills](https://img.shields.io/badge/Skills-9-green.svg)](#available-skills)
+<p align="center">
+  <a href="LICENSE"><img src="https://img.shields.io/badge/License-Apache%202.0-blue.svg" alt="License"></a>
+  <a href="#available-skills"><img src="https://img.shields.io/badge/Skills-9-green.svg" alt="Skills"></a>
+</p>
 
 A curated collection of Agent Skills by [Montimage](https://www.montimage.com/) that supercharge AI agents with specialized workflows, domain expertise, and reusable tooling for software development tasks. Works with Claude Code, Codex, OpenClaw, and other AI tools that support skill-based workflows.
 
