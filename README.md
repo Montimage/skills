@@ -3,11 +3,11 @@
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](LICENSE)
 [![Skills](https://img.shields.io/badge/Skills-9-green.svg)](#available-skills)
 
-A curated collection of [Claude Code](https://docs.anthropic.com/en/docs/claude-code) skills that extend AI agent capabilities with specialized workflows, domain expertise, and reusable tooling for software development tasks.
+A curated collection of Agent Skills by [Montimage](https://www.montimage.com/) that supercharge AI agents with specialized workflows, domain expertise, and reusable tooling for software development tasks. Works with Claude Code, Codex, OpenClaw, and other AI tools that support skill-based workflows.
 
-## What Are Skills?
+## What Are Agent Skills?
 
-Skills are modular, self-contained packages that transform Claude from a general-purpose assistant into a specialized agent. Each skill provides procedural knowledge, scripts, reference material, and templates for specific development workflows.
+Agent Skills are modular, self-contained packages that transform AI agents from general-purpose assistants into specialized tools. Each skill provides procedural knowledge, scripts, reference material, and templates for specific development workflows.
 
 ## Available Skills
 
@@ -20,39 +20,29 @@ Skills are modular, self-contained packages that transform Claude from a general
 | **[ollama-optimizer](skills/ollama-optimizer/)** | Optimize Ollama configuration based on system hardware |
 | **[oss-ready](skills/oss-ready/)** | Transform projects into professional open-source repositories |
 | **[release-notes](skills/release-notes/)** | Generate release notes from git commits and GitHub PRs/issues |
-| **[skill-creator](skills/skill-creator/)** | Guide for creating new Claude Code skills |
+| **[skill-creator](skills/skill-creator/)** | Guide for creating new Agent Skills |
 | **[test-coverage](skills/test-coverage/)** | Expand unit test coverage by targeting untested branches and edge cases |
 
 ## Quick Start
 
-### Prerequisites
-
-- [Claude Code CLI](https://docs.anthropic.com/en/docs/claude-code) installed and configured
-
 ### Installation
 
-1. Clone the repository:
+Install all skills with a single command:
 
 ```bash
-git clone https://github.com/Montimage/skills.git
-cd skills
+npx skills add https://github.com/Montimage/skills
 ```
 
-2. Install a skill by copying it to your Claude Code skills directory:
+Or install a specific skill:
 
 ```bash
-cp -r skills/<skill-name> ~/.claude/skills/
-```
-
-Or install all skills at once:
-
-```bash
-cp -r skills/* ~/.claude/skills/
+npx skills add https://github.com/Montimage/skills --skill code-review
+npx skills add https://github.com/Montimage/skills --skill oss-ready
 ```
 
 ### Usage
 
-Once installed, skills are automatically detected by Claude Code. Simply describe what you need in natural language:
+Once installed, skills are automatically detected by your AI agent. Simply describe what you need in natural language:
 
 ```
 # Triggers the code-review skill
@@ -98,7 +88,7 @@ skill-name/
 └── assets/           # Optional: templates, icons, fonts
 ```
 
-The `SKILL.md` file contains YAML frontmatter (`name`, `version`, `description`) that Claude reads to determine when to activate the skill, plus markdown instructions loaded on activation.
+The `SKILL.md` file contains YAML frontmatter (`name`, `version`, `description`) that the AI agent reads to determine when to activate the skill, plus markdown instructions loaded on activation.
 
 ## Contributing
 
