@@ -48,6 +48,10 @@ npx skills add https://github.com/Montimage/skills --skill code-review
 npx skills add https://github.com/Montimage/skills --skill oss-ready
 ```
 
+<p align="center">
+  <img src="assets/screenshots/install.png" alt="Installing Montimage Skills" width="600">
+</p>
+
 ### Usage
 
 Once installed, skills are automatically detected by your AI agent. Simply describe what you need in natural language:
