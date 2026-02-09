@@ -1,6 +1,6 @@
 ---
 name: skill-auditor
-description: Analyze agent skills for security risks, malicious patterns, and potential dangers before installation. Use when asked to "audit a skill", "check if a skill is safe", "analyze skill security", "review skill risk", "should I install this skill", "is this skill safe", or when evaluating any skill directory for trust and safety. Produces a comprehensive security report with a clear install/reject verdict.
+description: Analyze agent skills for security risks, malicious patterns, and potential dangers before installation. Use when asked to "audit a skill", "check if a skill is safe", "analyze skill security", "review skill risk", "should I install this skill", "is this skill safe", or when evaluating any skill directory for trust and safety. Also triggers when the user pastes a skill install command like "npx skills add https://github.com/org/repo --skill name". Produces a comprehensive security report with a clear install/reject verdict.
 ---
 
 # Skill Auditor
@@ -9,11 +9,75 @@ Analyze agent skill directories for security risks and provide an install/reject
 
 ## Workflow
 
-Auditing a skill follows three sequential phases:
+Auditing a skill follows these phases:
 
+0. **Resolve input** - Parse the user's input to locate the skill
 1. **Research** - Scan and understand what the skill does
 2. **Report** - Produce a detailed findings report
 3. **Verdict** - Deliver a clear install/reject recommendation
+
+## Phase 0: Resolve Input
+
+The user may provide the skill target in several formats. Parse the input and resolve it to a local directory before proceeding.
+
+### Format 1: Local path
+
+```
+audit skills/my-skill/
+audit /path/to/skill-dir
+```
+
+Use the path directly.
+
+### Format 2: GitHub URL
+
+```
+audit https://github.com/org/repo
+```
+
+Clone the repo to `/tmp/<repo-name>`, audit the root as the skill directory. Clean up after.
+
+### Format 3: Install command (npx skills add)
+
+```
+npx skills add https://github.com/org/repo --skill skill-name
+npx skills add https://github.com/org/repo
+```
+
+Extract the GitHub URL and optional `--skill` name:
+
+1. Parse the URL from the command (the `https://github.com/...` part)
+2. Clone the repo to `/tmp/<repo-name>`
+3. If `--skill <name>` is present, the audit target is the subdirectory `skills/<name>/` within the cloned repo. If that path doesn't exist, try `<name>/` at the repo root.
+4. If no `--skill` flag, audit the repo root as a single skill (look for `SKILL.md` at root)
+5. Clean up the cloned repo after the audit
+
+**Parsing rule:** Extract the GitHub URL with this pattern:
+```
+https://github.com/<owner>/<repo>
+```
+And the skill name (if any) from `--skill <name>` anywhere in the command.
+
+### Format 4: GitHub URL with skill name
+
+```
+audit https://github.com/org/repo --skill skill-name
+audit https://github.com/org/repo skill-name
+```
+
+Same as Format 3 — clone, then audit `skills/<name>/` or `<name>/`.
+
+### Resolution summary
+
+| Input | Clone? | Audit target |
+|-------|--------|-------------|
+| Local path | No | The path as-is |
+| GitHub URL only | Yes → `/tmp/<repo>` | Repo root |
+| GitHub URL + `--skill X` | Yes → `/tmp/<repo>` | `skills/X/` or `X/` in repo |
+| `npx skills add URL` | Yes → `/tmp/<repo>` | Repo root |
+| `npx skills add URL --skill X` | Yes → `/tmp/<repo>` | `skills/X/` or `X/` in repo |
+
+After resolving, verify the target directory contains a `SKILL.md`. If not, report an error.
 
 ## Phase 1: Research
 
