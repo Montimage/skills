@@ -211,6 +211,33 @@ When delivering the verdict, present it clearly with:
 3. **Top 3 concerns**: If any, with specific file:line references
 4. **Recommendation**: What to do next (install, review specific files, or reject)
 
+## Phase 4: Offer Installation (Safe/Low verdicts only)
+
+If the verdict is **SAFE TO INSTALL** or **INSTALL WITH CAUTION**, ask the user if they want to install the skill now.
+
+### Reconstruct the install command
+
+Build the `npx skills add` command from the information gathered in Phase 0:
+
+- **If the input was already an install command** (`npx skills add ...`): reuse it as-is
+- **If the input was a GitHub URL** (`https://github.com/owner/repo`):
+  - Without `--skill`: `npx skills add https://github.com/owner/repo`
+  - With `--skill X`: `npx skills add https://github.com/owner/repo --skill X`
+- **If the input was a local path**: installation via `npx skills add` is not applicable — skip this phase
+
+### Ask and install
+
+Present the install command to the user and ask if they want to proceed:
+
+> The skill passed the audit. Would you like to install it now?
+> ```
+> npx skills add https://github.com/owner/repo --skill skill-name
+> ```
+
+If the user confirms, run the command. If the verdict was **INSTALL WITH CAUTION**, remind them of the key concerns before asking.
+
+Do **NOT** offer installation for **DO NOT INSTALL** verdicts.
+
 ## Important Notes
 
 - Always read ALL files in the skill - never skip based on file extension alone
