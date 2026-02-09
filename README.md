@@ -7,6 +7,7 @@
 </p>
 
 <p align="center">
+  <a href="https://github.com/Montimage/skills/releases/tag/v1.0.0"><img src="https://img.shields.io/badge/Release-v1.0.0-E5A630.svg" alt="Release"></a>
   <a href="LICENSE"><img src="https://img.shields.io/badge/License-Apache%202.0-blue.svg" alt="License"></a>
   <a href="#available-skills"><img src="https://img.shields.io/badge/Skills-9-green.svg" alt="Skills"></a>
 </p>
