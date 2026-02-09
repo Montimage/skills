@@ -9,7 +9,7 @@
 <p align="center">
   <a href="https://github.com/Montimage/skills/releases/tag/v1.0.0"><img src="https://img.shields.io/badge/Release-v1.0.0-E5A630.svg" alt="Release"></a>
   <a href="LICENSE"><img src="https://img.shields.io/badge/License-Apache%202.0-blue.svg" alt="License"></a>
-  <a href="#available-skills"><img src="https://img.shields.io/badge/Skills-9-green.svg" alt="Skills"></a>
+  <a href="#available-skills"><img src="https://img.shields.io/badge/Skills-10-green.svg" alt="Skills"></a>
 </p>
 
 A curated collection of Agent Skills by [Montimage](https://www.montimage.com/) that supercharge AI agents with specialized workflows, domain expertise, and reusable tooling for software development tasks. Works with Claude Code, Codex, OpenClaw, and other AI tools that support skill-based workflows.
@@ -29,6 +29,7 @@ Agent Skills are modular, self-contained packages that transform AI agents from 
 | **[ollama-optimizer](skills/ollama-optimizer/)** | Optimize Ollama configuration based on system hardware |
 | **[oss-ready](skills/oss-ready/)** | Transform projects into professional open-source repositories |
 | **[release-notes](skills/release-notes/)** | Generate release notes from git commits and GitHub PRs/issues |
+| **[skill-auditor](skills/skill-auditor/)** | Analyze agent skills for security risks and provide install/reject verdicts |
 | **[skill-creator](skills/skill-creator/)** | Guide for creating new Agent Skills |
 | **[test-coverage](skills/test-coverage/)** | Expand unit test coverage by targeting untested branches and edge cases |
 
@@ -80,6 +81,7 @@ skills/
 │   ├── ollama-optimizer/     # Local LLM optimization
 │   ├── oss-ready/            # Open-source readiness
 │   ├── release-notes/        # Changelog generation
+│   ├── skill-auditor/        # Security audit for agent skills
 │   ├── skill-creator/        # Skill authoring guide
 │   └── test-coverage/        # Test coverage expansion
 ├── docs/                     # Project documentation
