@@ -122,6 +122,31 @@ INSTRUCTION_MANIPULATION_PATTERNS = [
 ]
 
 
+REDACTION_PATTERNS = [
+    # API keys with known prefixes
+    (r"sk-[a-zA-Z0-9]{20,}", "[REDACTED]"),
+    (r"ghp_[a-zA-Z0-9]{36}", "[REDACTED]"),
+    (r"gho_[a-zA-Z0-9]{36}", "[REDACTED]"),
+    (r"github_pat_[a-zA-Z0-9_]{22,}", "[REDACTED]"),
+    (r"glpat-[a-zA-Z0-9\-_]{20,}", "[REDACTED]"),
+    (r"AKIA[0-9A-Z]{16}", "[REDACTED]"),
+    (r"xox[bpas]-[a-zA-Z0-9\-]{10,}", "[REDACTED]"),
+    # Generic key/secret/password/token assignments
+    (r"(?i)(api[_-]?key|apikey|secret|password|passwd|pwd|token|auth[_-]?token|access[_-]?key)\s*[=:]\s*['\"]([^'\"]{8,})['\"]",
+     r"\1 = '[REDACTED]'"),
+    # Private key blocks
+    (r"-----BEGIN\s+(RSA|DSA|EC|OPENSSH|PGP)\s+PRIVATE\s+KEY-----[\s\S]*?-----END\s+\1\s+PRIVATE\s+KEY-----",
+     "[REDACTED-PRIVATE-KEY]"),
+]
+
+
+def redact_sensitive_context(text: str) -> str:
+    """Replace known secret patterns in a context string with [REDACTED]."""
+    for pattern, replacement in REDACTION_PATTERNS:
+        text = re.sub(pattern, replacement, text)
+    return text
+
+
 def get_file_info(filepath: Path, skill_root: Path) -> dict:
     """Get metadata about a single file."""
     st = filepath.stat()
@@ -165,7 +190,7 @@ def scan_text_file(filepath: Path) -> dict:
                 findings["dangerous_imports"].append({
                     "line": i,
                     "import": imp,
-                    "context": stripped[:120],
+                    "context": redact_sensitive_context(stripped[:120]),
                 })
 
         # Check shell patterns
@@ -174,7 +199,7 @@ def scan_text_file(filepath: Path) -> dict:
                 findings["shell_patterns"].append({
                     "line": i,
                     "pattern": desc,
-                    "context": stripped[:120],
+                    "context": redact_sensitive_context(stripped[:120]),
                 })
 
         # Check obfuscation
@@ -183,7 +208,7 @@ def scan_text_file(filepath: Path) -> dict:
                 findings["obfuscation"].append({
                     "line": i,
                     "pattern": desc,
-                    "context": stripped[:120],
+                    "context": redact_sensitive_context(stripped[:120]),
                 })
 
         # Check sensitive data
@@ -192,7 +217,7 @@ def scan_text_file(filepath: Path) -> dict:
                 findings["sensitive_data"].append({
                     "line": i,
                     "pattern": desc,
-                    "context": stripped[:120],
+                    "context": redact_sensitive_context(stripped[:120]),
                 })
 
         # Check filesystem access
@@ -201,7 +226,7 @@ def scan_text_file(filepath: Path) -> dict:
                 findings["filesystem_access"].append({
                     "line": i,
                     "pattern": desc,
-                    "context": stripped[:120],
+                    "context": redact_sensitive_context(stripped[:120]),
                 })
 
         # Check instruction manipulation
@@ -210,7 +235,7 @@ def scan_text_file(filepath: Path) -> dict:
                 findings["instruction_manipulation"].append({
                     "line": i,
                     "pattern": desc,
-                    "context": stripped[:120],
+                    "context": redact_sensitive_context(stripped[:120]),
                 })
 
     # Remove empty categories
