@@ -4,6 +4,10 @@ version: 1.1.0
 description: Expand unit test coverage by targeting untested branches and edge cases. Use when users ask to "increase test coverage", "add more tests", "expand unit tests", "cover edge cases", "improve test coverage", or want to identify and fill gaps in existing test suites. Adapts to project's testing framework.
 ---
 
+# Test Coverage
+
+Expand unit test coverage by targeting untested branches and edge cases.
+
 ## Workflow
 
 ### 0. Create Feature Branch

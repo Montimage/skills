@@ -4,6 +4,10 @@ version: 1.1.0
 description: Transform projects into professional open-source repositories with standard components. Use when users ask to "make this open source", "add open source files", "setup OSS standards", "create contributing guide", "add license", or want to prepare a project for public release with README, CONTRIBUTING, LICENSE, and GitHub templates.
 ---
 
+# OSS Ready
+
+Transform projects into professional open-source repositories with standard components.
+
 ## Workflow
 
 ### 0. Create Feature Branch
