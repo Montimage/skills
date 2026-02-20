@@ -1,6 +1,6 @@
 ---
 name: oss-ready
-version: 1.1.0
+version: 1.2.0
 description: Transform projects into professional open-source repositories with standard components. Use when users ask to "make this open source", "add open source files", "setup OSS standards", "create contributing guide", "add license", or want to prepare a project for public release with README, CONTRIBUTING, LICENSE, and GitHub templates.
 ---
 
@@ -47,18 +47,34 @@ Identify:
 - Coding standards
 - Testing requirements
 
-**LICENSE** - Default to MIT unless specified. Copy from `assets/LICENSE-MIT`.
+**LICENSE** - Default to MIT unless specified.
 
-**CODE_OF_CONDUCT.md** - Use Contributor Covenant. Copy from `assets/CODE_OF_CONDUCT.md`.
+**CODE_OF_CONDUCT.md** - Contributor Covenant.
 
-**SECURITY.md** - Vulnerability reporting process. Copy from `assets/SECURITY.md`.
+**SECURITY.md** - Vulnerability reporting process.
+
+**IMPORTANT — Copy asset files using shell commands only.** Some asset files (CODE_OF_CONDUCT.md, SECURITY.md) contain language about harassment, abuse, and vulnerability disclosure that **will trigger content filtering** if you attempt to read and re-write the content. Always use `cp` to copy these files. Never read their contents into context and write them back out.
+
+```bash
+# Copy from the skill's assets directory — use cp, do NOT read+write
+SKILL_ASSETS="{SKILL_DIR}/assets"
+cp "$SKILL_ASSETS/LICENSE-MIT" LICENSE
+cp "$SKILL_ASSETS/CODE_OF_CONDUCT.md" CODE_OF_CONDUCT.md
+cp "$SKILL_ASSETS/SECURITY.md" SECURITY.md
+```
+
+After copying, only use `sed` to replace placeholders (e.g., `[INSERT CONTACT METHOD]`, `[INSERT EMAIL]`) with project-specific values. Do not rewrite the full file.
 
 ### 3. Create GitHub Templates
 
-Copy from `assets/.github/`:
-- `ISSUE_TEMPLATE/bug_report.md`
-- `ISSUE_TEMPLATE/feature_request.md`
-- `PULL_REQUEST_TEMPLATE.md`
+Copy from the skill's `assets/.github/` using shell commands:
+
+```bash
+mkdir -p .github/ISSUE_TEMPLATE
+cp "$SKILL_ASSETS/.github/ISSUE_TEMPLATE/bug_report.md" .github/ISSUE_TEMPLATE/
+cp "$SKILL_ASSETS/.github/ISSUE_TEMPLATE/feature_request.md" .github/ISSUE_TEMPLATE/
+cp "$SKILL_ASSETS/.github/PULL_REQUEST_TEMPLATE.md" .github/
+```
 
 ### 4. Create Documentation Structure
 
