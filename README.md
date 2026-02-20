@@ -20,18 +20,40 @@ Agent Skills are modular, self-contained packages that transform AI agents from 
 
 ## Available Skills
 
+### Code Quality & Testing
+
 | Skill | Description |
 |-------|-------------|
-| **[code-review](skills/code-review/)** | Code reviews following Code Smells and Pragmatic Programmer best practices |
-| **[devops-pipeline](skills/devops-pipeline/)** | Pre-commit hooks and GitHub Actions for quality assurance |
-| **[docs-generator](skills/docs-generator/)** | Restructure project documentation for clarity and accessibility |
-| **[install-script-generator](skills/install-script-generator/)** | Cross-platform installation scripts with environment detection |
-| **[ollama-optimizer](skills/ollama-optimizer/)** | Optimize Ollama configuration based on system hardware |
-| **[oss-ready](skills/oss-ready/)** | Transform projects into professional open-source repositories |
-| **[release-notes](skills/release-notes/)** | Generate release notes from git commits and GitHub PRs/issues |
-| **[skill-auditor](skills/skill-auditor/)** | Analyze agent skills for security risks and provide install/reject verdicts |
-| **[skill-creator](skills/skill-creator/)** | Guide for creating new Agent Skills |
-| **[test-coverage](skills/test-coverage/)** | Expand unit test coverage by targeting untested branches and edge cases |
+| **[code-review](skills/code-review/)** | Review code for smells, security issues, and Pragmatic Programmer violations with severity-based reports |
+| **[test-coverage](skills/test-coverage/)** | Identify untested branches, error paths, and edge cases, then generate targeted tests |
+
+### DevOps & Releases
+
+| Skill | Description |
+|-------|-------------|
+| **[devops-pipeline](skills/devops-pipeline/)** | Auto-detect project stack and configure pre-commit hooks + GitHub Actions CI |
+| **[release-notes](skills/release-notes/)** | Generate categorized release notes from git history, merged PRs, and closed issues |
+
+### Documentation & Open Source
+
+| Skill | Description |
+|-------|-------------|
+| **[docs-generator](skills/docs-generator/)** | Analyze project type and restructure documentation into a coherent hierarchy with diagrams |
+| **[oss-ready](skills/oss-ready/)** | Add README, CONTRIBUTING, LICENSE, CODE_OF_CONDUCT, SECURITY, and GitHub templates |
+
+### Infrastructure & Optimization
+
+| Skill | Description |
+|-------|-------------|
+| **[install-script-generator](skills/install-script-generator/)** | Generate cross-platform install scripts with environment detection, verification, and rollback |
+| **[ollama-optimizer](skills/ollama-optimizer/)** | Detect hardware (GPU/RAM/CPU), classify tier, and optimize Ollama for maximum performance |
+
+### Skill Development
+
+| Skill | Description |
+|-------|-------------|
+| **[skill-creator](skills/skill-creator/)** | Guided 4-phase skill creation: Discovery, Approval, Build, Test & Deliver |
+| **[skill-auditor](skills/skill-auditor/)** | Scan skills for security risks, prompt injection, and malicious patterns before installation |
 
 ## Quick Start
 
@@ -73,22 +95,27 @@ Once installed, skills are automatically detected by your AI agent. Simply descr
 
 ```
 skills/
-├── skills/
-│   ├── code-review/          # Code quality reviews
-│   ├── devops-pipeline/      # CI/CD and pre-commit setup
-│   ├── docs-generator/       # Documentation restructuring
+├── skills/                        # All agent skills
+│   ├── code-review/               # Code quality reviews
+│   ├── devops-pipeline/           # CI/CD and pre-commit setup
+│   ├── docs-generator/            # Documentation restructuring
 │   ├── install-script-generator/  # Cross-platform installers
-│   ├── ollama-optimizer/     # Local LLM optimization
-│   ├── oss-ready/            # Open-source readiness
-│   ├── release-notes/        # Changelog generation
-│   ├── skill-auditor/        # Security audit for agent skills
-│   ├── skill-creator/        # Skill authoring guide
-│   └── test-coverage/        # Test coverage expansion
-├── docs/                     # Project documentation
-├── LICENSE                   # Apache 2.0
-├── CONTRIBUTING.md           # Contribution guidelines
-├── CODE_OF_CONDUCT.md        # Community standards
-└── SECURITY.md               # Vulnerability reporting
+│   ├── ollama-optimizer/          # Local LLM optimization
+│   ├── oss-ready/                 # Open-source readiness
+│   ├── release-notes/             # Changelog generation
+│   ├── skill-auditor/             # Security audit for agent skills
+│   ├── skill-creator/             # Skill authoring guide
+│   └── test-coverage/             # Test coverage expansion
+├── assets/                        # Logo and screenshot assets
+├── docs/                          # Project documentation
+│   ├── ARCHITECTURE.md            # System design and decisions
+│   ├── CHANGELOG.md               # Version history
+│   ├── DEPLOYMENT.md              # Publishing and distribution
+│   └── DEVELOPMENT.md             # Local development setup
+├── LICENSE                        # Apache 2.0
+├── CONTRIBUTING.md                # Contribution guidelines
+├── CODE_OF_CONDUCT.md             # Community standards
+└── SECURITY.md                    # Vulnerability reporting
 ```
 
 ## Skill Anatomy
@@ -97,13 +124,14 @@ Each skill follows a standard structure:
 
 ```
 skill-name/
-├── SKILL.md          # Required: metadata + instructions
+├── SKILL.md          # Required: metadata + instructions for the AI agent
+├── README.md         # Required: human-readable documentation
 ├── scripts/          # Optional: executable code (Python/Bash)
 ├── references/       # Optional: domain knowledge, documentation
 └── assets/           # Optional: templates, icons, fonts
 ```
 
-The `SKILL.md` file contains YAML frontmatter (`name`, `version`, `description`) that the AI agent reads to determine when to activate the skill, plus markdown instructions loaded on activation.
+The `SKILL.md` file contains YAML frontmatter (`name`, `version`, `description`) that the AI agent reads to determine when to activate the skill, plus markdown instructions loaded on activation. The `README.md` provides human-readable documentation with highlights, trigger phrases, workflow diagrams, and usage instructions.
 
 ## Contributing
 
