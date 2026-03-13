@@ -17,7 +17,8 @@
 | "review this code" | Audit current codebase for code smells and issues |
 | "check for code smells" | Scan for Bloaters, Couplers, Dispensables, and more |
 | "review my PR" | Focus review on changed files in the PR diff |
-| "audit the codebase" | Full codebase scan prioritizing entry points and hot files |
+| "find bugs in this code" | Scan for security risks, logic errors, and quality issues |
+| "is this code good?" | Full quality assessment with severity-graded findings |
 
 ## How It Works
 

@@ -15,8 +15,9 @@
 | Say this... | Skill will... |
 |---|---|
 | "make this open source" | Add all standard OSS files and templates |
+| "prepare for public release" | Full open-source readiness package |
 | "add open source files" | Create LICENSE, CONTRIBUTING, CODE_OF_CONDUCT, SECURITY |
-| "setup OSS standards" | Configure GitHub templates and documentation structure |
+| "setup GitHub templates" | Add issue templates and PR template |
 | "create contributing guide" | Generate CONTRIBUTING.md with dev setup, PR process, and standards |
 
 ## How It Works

@@ -1,7 +1,7 @@
 ---
 name: skill-auditor
-version: 1.2.0
-description: Analyze agent skills for security risks, malicious patterns, and potential dangers before installation. Use when asked to "audit a skill", "check if a skill is safe", "analyze skill security", "review skill risk", "should I install this skill", "is this skill safe", or when evaluating any skill directory for trust and safety. Also triggers when the user pastes a skill install command like "npx skills add https://github.com/org/repo --skill name". Produces a comprehensive security report with a clear install/reject verdict.
+version: 1.3.0
+description: Analyze agent skills for security risks, malicious patterns, and potential dangers before installation. Use when asked to "audit a skill", "check if a skill is safe", "analyze skill security", "review skill risk", "should I install this skill", "is this skill safe", "scan this skill", or when evaluating any skill directory for trust and safety. Also triggers when the user pastes a skill install command like "npx skills add https://github.com/org/repo --skill name". Produces a comprehensive security report with a clear install/reject verdict. Trigger this skill proactively whenever the user is about to install a third-party skill or mentions concerns about skill safety.
 ---
 
 # Skill Auditor

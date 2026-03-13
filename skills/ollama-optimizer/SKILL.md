@@ -1,7 +1,7 @@
 ---
 name: ollama-optimizer
-version: 1.0.0
-description: Optimize Ollama configuration for maximum performance on the current machine. Use when asked to "optimize Ollama", "configure Ollama", "speed up Ollama", "tune LLM performance", "setup local LLM", "fix Ollama performance", "Ollama running slow", or when users want to maximize inference speed, reduce memory usage, or select appropriate models for their hardware. Analyzes system hardware (GPU, RAM, CPU) and provides tailored recommendations.
+version: 1.1.0
+description: Optimize Ollama configuration for maximum performance on the current machine. Use when asked to "optimize Ollama", "configure Ollama", "speed up Ollama", "tune LLM performance", "setup local LLM", "fix Ollama performance", "Ollama running slow", "which model should I use", "Ollama out of memory", "best Ollama settings", or when users want to maximize inference speed, reduce memory usage, or select appropriate models for their hardware. Analyzes system hardware (GPU, RAM, CPU) and provides tailored recommendations. Trigger this skill whenever the user mentions Ollama, local LLM performance, model selection for their hardware, or VRAM/memory issues with local models.
 ---
 
 # Ollama Optimizer

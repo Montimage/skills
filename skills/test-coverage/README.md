@@ -6,9 +6,9 @@
 
 - Analyzes existing coverage reports to identify gaps
 - Targets logical branches, error paths, and boundary values
-- Adapts to the project's testing framework (Jest, pytest, Go testing, etc.)
+- Adapts to the project's testing framework (Jest, Vitest, pytest, Go testing, Rust)
 - Follows existing test patterns and naming conventions
-- Verifies measurable coverage improvement
+- Verifies measurable coverage improvement with before/after comparison
 
 ## When to Use
 
@@ -16,14 +16,15 @@
 |---|---|
 | "increase test coverage" | Identify gaps and write tests for untested code paths |
 | "add more tests" | Generate tests for error handling, boundaries, and edge cases |
+| "find untested code" | Run coverage report and highlight uncovered lines/branches |
+| "what's not tested" | Analyze coverage gaps and prioritize by risk |
 | "cover edge cases" | Write tests for null/empty inputs, min/max values, async issues |
-| "improve test coverage" | Analyze coverage report, write tests, verify improvement |
 
 ## How It Works
 
 ```mermaid
 graph TD
-    A["Analyze Coverage Report"] --> B["Identify Test Gaps"]
+    A["Run Coverage Report"] --> B["Identify Test Gaps"]
     B --> C["Write Targeted Tests"]
     C --> D["Verify Improvement"]
     style A fill:#4CAF50,color:#fff
@@ -38,4 +39,4 @@ graph TD
 
 ## Output
 
-Generates new test files or adds test cases to existing test files, targeting untested branches, error paths, boundary conditions, and edge cases. Confirms coverage improvement by re-running the coverage report.
+Generates new test files or adds test cases to existing test files, targeting untested branches, error paths, boundary conditions, and edge cases. Reports before/after coverage numbers to confirm improvement.

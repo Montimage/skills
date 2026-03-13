@@ -18,6 +18,7 @@
 | "is this skill safe?" | Scan for risks and deliver install/reject verdict |
 | "npx skills add https://..." | Intercept install, audit first, then offer installation |
 | "check skill security" | Analyze scripts, references, and instructions for threats |
+| "scan this skill" | Full file inventory and pattern-based risk analysis |
 
 ## How It Works
 

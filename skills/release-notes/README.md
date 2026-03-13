@@ -18,6 +18,7 @@
 | "generate changelog" | Produce a structured changelog between two versions |
 | "prepare release" | Build release notes and optionally publish a GitHub release |
 | "what changed since last release" | Summarize all changes since the latest tag |
+| "draft release notes" | Categorize commits and PRs into a release-ready format |
 
 ## How It Works
 

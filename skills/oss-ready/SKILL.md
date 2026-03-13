@@ -1,12 +1,24 @@
 ---
 name: oss-ready
-version: 1.2.0
-description: Transform projects into professional open-source repositories with standard components. Use when users ask to "make this open source", "add open source files", "setup OSS standards", "create contributing guide", "add license", or want to prepare a project for public release with README, CONTRIBUTING, LICENSE, and GitHub templates.
+version: 1.3.0
+description: Transform projects into professional open-source repositories with standard components. Use when users ask to "make this open source", "add open source files", "setup OSS standards", "create contributing guide", "add license", "prepare for public release", "add CODE_OF_CONDUCT", "add SECURITY.md", "GitHub templates", or want to prepare a project for public release with README, CONTRIBUTING, LICENSE, and GitHub templates. Trigger this skill whenever the user mentions open-sourcing, public repos, community standards, or making a project contribution-ready — even if they just say "let's open source this".
 ---
 
 # OSS Ready
 
 Transform projects into professional open-source repositories with standard components.
+
+## Repo Sync Before Edits (mandatory)
+
+Before making any changes, sync with the remote to avoid conflicts:
+
+```bash
+branch="$(git rev-parse --abbrev-ref HEAD)"
+git fetch origin
+git pull --rebase origin "$branch"
+```
+
+If the working tree is dirty, stash first, sync, then pop. If `origin` is missing or conflicts occur, stop and ask the user before continuing.
 
 ## Workflow
 

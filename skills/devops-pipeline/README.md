@@ -8,6 +8,7 @@
 - Configures pre-commit hooks with language-appropriate tools
 - Creates GitHub Actions CI workflows mirroring local checks
 - Supports JS/TS, Python, Go, Rust, and Java ecosystems
+- Creates feature branch before making changes
 
 ## When to Use
 
@@ -17,6 +18,7 @@
 | "add pre-commit hooks" | Configure `.pre-commit-config.yaml` for your stack |
 | "create GitHub Actions" | Generate `.github/workflows/ci.yml` with caching and matrix testing |
 | "add linting to CI" | Set up formatters, linters, and security checks |
+| "configure CI pipeline" | Detect stack and build complete quality gate automation |
 
 ## How It Works
 

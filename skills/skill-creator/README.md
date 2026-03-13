@@ -1,10 +1,10 @@
 # Skill Creator
 
-> Interactive guide for creating and updating skills that extend Claude's capabilities with specialized workflows.
+> Create new skills, modify existing skills, and package them for distribution.
 
 ## Highlights
 
-- Four-phase guided process: Discovery, Approval, Build, Test & Deliver
+- Six-phase guided process: Understand, Plan, Init, Edit, Package, Iterate
 - Generates SKILL.md with proper frontmatter and progressive disclosure structure
 - Creates bundled resources (scripts, references, assets) as needed
 - Includes validation, testing, and packaging automation
@@ -14,18 +14,19 @@
 
 | Say this... | Skill will... |
 |---|---|
-| "create a new skill" | Guide through Discovery, Approval, Build, and Deliver phases |
+| "create a new skill" | Guide through understanding, planning, building, and packaging |
+| "build a skill for X" | Interactive creation with requirements gathering |
 | "update this skill" | Read existing skill, propose changes, re-validate and re-package |
-| "build a skill for X" | Interactive creation with requirements gathering and approval |
 | "package this skill" | Validate and bundle into a distributable .skill file |
+| "improve this skill" | Iterate on skill quality based on real usage feedback |
 
 ## How It Works
 
 ```mermaid
 graph TD
-    A["Discovery"] --> B["Approval"]
-    B --> C["Build Skill"]
-    C --> D["Test & Deliver"]
+    A["Understand Requirements"] --> B["Plan Resources"]
+    B --> C["Init & Build Skill"]
+    C --> D["Package & Deliver"]
     style A fill:#4CAF50,color:#fff
     style D fill:#2196F3,color:#fff
 ```
@@ -38,7 +39,7 @@ graph TD
 
 ## Output
 
-Creates a complete skill directory with SKILL.md (frontmatter + instructions), README.md, optional scripts/references/assets directories, and a packaged `.skill` file ready for distribution.
+Creates a complete skill directory with SKILL.md (frontmatter + instructions), optional scripts/references/assets directories, and a packaged `.skill` file ready for distribution.
 
 ## Resources
 

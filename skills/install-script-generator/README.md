@@ -17,7 +17,7 @@
 | "create an installer for X" | Generate a full installation pipeline for software X |
 | "automate installation" | Build verified install scripts with rollback support |
 | "install X on any OS" | Create cross-platform installation with OS detection |
-| "setup script for Node.js" | Detect environment, install Node.js, generate usage guide |
+| "write an install script" | Detect environment, plan steps, execute, and document |
 
 ## How It Works
 

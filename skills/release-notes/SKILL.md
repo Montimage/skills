@@ -1,12 +1,24 @@
 ---
 name: release-notes
-version: 1.0.0
-description: Generate release notes from git commits and GitHub PRs/issues. Use when asked to "create release notes", "generate changelog", "prepare release", "what changed since last release", or need to document changes for a new version. Analyzes commit history, merged PRs, and closed issues to produce GitHub Releases formatted notes.
+version: 1.1.0
+description: Generate release notes from git commits and GitHub PRs/issues. Use when asked to "create release notes", "generate changelog", "prepare release", "what changed since last release", "write changelog", "document release", "tag release", "publish release", "draft release notes", or need to document changes for a new version. Analyzes commit history, merged PRs, and closed issues to produce GitHub Releases formatted notes. Trigger this skill whenever the user mentions releases, changelogs, version bumps, or tagging — even casually like "what's new since v1.0".
 ---
 
 # Release Notes Generator
 
 Generate comprehensive release notes by analyzing git history and GitHub activity.
+
+## Repo Sync Before Edits (mandatory)
+
+Before generating release notes or creating tags, sync with the remote:
+
+```bash
+branch="$(git rev-parse --abbrev-ref HEAD)"
+git fetch origin
+git pull --rebase origin "$branch"
+```
+
+If the working tree is dirty, stash first, sync, then pop. If `origin` is missing or conflicts occur, stop and ask the user before continuing.
 
 ## Workflow
 

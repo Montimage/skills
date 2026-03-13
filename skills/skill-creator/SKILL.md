@@ -1,7 +1,7 @@
 ---
 name: skill-creator
-version: 1.0.0
-description: Guide for creating effective skills. This skill should be used when users want to create a new skill (or update an existing skill) that extends Claude's capabilities with specialized knowledge, workflows, or tool integrations.
+version: 1.1.0
+description: Create new skills, modify and improve existing skills, and measure skill performance. Use when users want to create a skill from scratch, update or optimize an existing skill, package a skill for distribution, or iterate on skill quality. Trigger this skill whenever the user says "create a skill", "build a skill", "make a skill for X", "update this skill", "improve this skill", "package this skill", or mentions wanting to extend Claude's capabilities with specialized workflows or tools.
 license: Complete terms in LICENSE.txt
 ---
 

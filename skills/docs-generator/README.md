@@ -8,16 +8,17 @@
 - Streamlines root README.md as an effective entry point
 - Creates component-level READMEs per module/package/service
 - Generates Mermaid diagrams for architecture and data flow
-- Organizes docs/ directory by category
+- Organizes docs/ directory by category with quality checklist
 
 ## When to Use
 
 | Say this... | Skill will... |
 |---|---|
-| "organize docs" | Restructure scattered documentation into coherent hierarchy |
 | "generate documentation" | Create docs/ structure with architecture, API, deployment guides |
-| "improve doc structure" | Streamline README and add cross-referenced documentation |
-| "restructure README" | Refine root README as project entry point with quickstart |
+| "write docs for this project" | Analyze project and create full documentation hierarchy |
+| "the README is a mess" | Restructure root README as clean entry point with quickstart |
+| "document my code" | Generate component READMEs and centralized docs/ |
+| "add API docs" | Create api-reference.md with endpoints and examples |
 
 ## How It Works
 

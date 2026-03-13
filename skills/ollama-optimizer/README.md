@@ -16,8 +16,9 @@
 |---|---|
 | "optimize Ollama" | Analyze hardware and generate tailored optimization guide |
 | "Ollama running slow" | Detect bottlenecks and recommend performance fixes |
+| "which model should I use" | Recommend models based on your hardware tier |
+| "Ollama out of memory" | Adjust context size, quantization, and KV cache settings |
 | "setup local LLM" | Configure Ollama with optimal settings for your hardware |
-| "tune LLM performance" | Adjust environment variables, model selection, and context size |
 
 ## How It Works
 

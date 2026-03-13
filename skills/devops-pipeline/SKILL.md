@@ -1,14 +1,33 @@
 ---
 name: devops-pipeline
-version: 1.0.0
-description: Implement pre-commit hooks and GitHub Actions for quality assurance. Use when asked to "setup CI/CD", "add pre-commit hooks", "create GitHub Actions", "setup quality gates", "automate testing", "add linting to CI", or any DevOps automation for code quality. Detects project type and configures appropriate tools.
+version: 1.1.0
+description: Implement pre-commit hooks and GitHub Actions for quality assurance. Use when asked to "setup CI/CD", "add pre-commit hooks", "create GitHub Actions", "setup quality gates", "automate testing", "add linting to CI", "setup code quality checks", "configure CI pipeline", "add automated checks", or any DevOps automation for code quality. Detects project type and configures appropriate tools. Trigger this skill whenever the user mentions CI, CD, pre-commit, GitHub Actions, linting automation, or quality gates — even if they don't use those exact terms.
 ---
 
 # DevOps Pipeline
 
 Implement comprehensive DevOps quality gates adapted to project type.
 
+## Repo Sync Before Edits (mandatory)
+
+Before making any changes, sync with the remote to avoid conflicts:
+
+```bash
+branch="$(git rev-parse --abbrev-ref HEAD)"
+git fetch origin
+git pull --rebase origin "$branch"
+```
+
+If the working tree is dirty, stash first, sync, then pop. If `origin` is missing or conflicts occur, stop and ask the user before continuing.
+
 ## Workflow
+
+### 0. Create Feature Branch
+
+Before making any changes:
+1. Check the current branch — if already on a feature branch for this task, skip
+2. Check the repo for branch naming conventions (e.g., `feat/`, `feature/`, etc.)
+3. Create and switch to a new branch following the repo's convention, or fallback to: `feat/devops-pipeline`
 
 ### 1. Analyze Project
 

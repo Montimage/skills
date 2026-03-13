@@ -1,12 +1,24 @@
 ---
 name: code-review
-version: 1.0.0
-description: Perform code reviews following best practices from Code Smells and The Pragmatic Programmer. Use when asked to "review this code", "check for code smells", "review my PR", "audit the codebase", or need quality feedback on code changes. Supports both full codebase audits and focused PR/diff reviews. Outputs structured markdown reports grouped by severity.
+version: 1.1.0
+description: Perform code reviews following best practices from Code Smells and The Pragmatic Programmer. Use when asked to "review this code", "check for code smells", "review my PR", "audit the codebase", "find bugs", "check code quality", "what's wrong with this code", "is this code good", or any request for quality feedback on code changes. Supports both full codebase audits and focused PR/diff reviews. Outputs structured markdown reports grouped by severity. Trigger this skill whenever the user wants a second opinion on code, even if they don't explicitly say "review".
 ---
 
 # Code Review
 
 Review code for quality issues, code smells, and pragmatic programming violations.
+
+## Repo Sync Before Edits (mandatory)
+
+Before generating any output files, sync with the remote to avoid conflicts:
+
+```bash
+branch="$(git rev-parse --abbrev-ref HEAD)"
+git fetch origin
+git pull --rebase origin "$branch"
+```
+
+If the working tree is dirty, stash first, sync, then pop. If `origin` is missing or conflicts occur, stop and ask the user before continuing.
 
 ## Review Modes
 
