@@ -83,15 +83,14 @@ Use Mermaid for visual documentation embedded directly in markdown:
 - **Database schemas**: ER diagrams for relational models
 
 Example:
-```markdown
-` ` `mermaid
-graph TD
-    A["Client"] --> B["API Gateway"]
-    B --> C["Auth Service"]
-    B --> D["Core Service"]
-    D --> E["Database"]
-` ` `
-```
+
+    ```mermaid
+    graph TD
+        A["Client"] --> B["API Gateway"]
+        B --> C["Auth Service"]
+        B --> D["Core Service"]
+        D --> E["Database"]
+    ```
 
 ### 4. Quality Checklist
 

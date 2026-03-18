@@ -20,6 +20,8 @@ git pull --rebase origin "$branch"
 
 If the working tree is dirty, stash first, sync, then pop. If `origin` is missing or conflicts occur, stop and ask the user before continuing.
 
+Note: Release notes are typically generated on the release branch (often `main`). A feature branch is not required — this skill produces a report file and optionally creates a GitHub release.
+
 ## Workflow
 
 ### 1. Determine Version Range

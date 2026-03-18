@@ -8,6 +8,18 @@ description: Optimize Ollama configuration for maximum performance on the curren
 
 Optimize Ollama configuration based on system hardware analysis.
 
+## Repo Sync Before Edits (mandatory)
+
+Before generating any output files, sync with the remote to avoid conflicts:
+
+```bash
+branch="$(git rev-parse --abbrev-ref HEAD)"
+git fetch origin
+git pull --rebase origin "$branch"
+```
+
+If the working tree is dirty, stash first, sync, then pop. If `origin` is missing or conflicts occur, stop and ask the user before continuing.
+
 ## Workflow
 
 ### Phase 1: System Detection
@@ -15,7 +27,7 @@ Optimize Ollama configuration based on system hardware analysis.
 Run the detection script to gather hardware information:
 
 ```bash
-python3 scripts/detect_system.py
+python3 {SKILL_DIR}/scripts/detect_system.py
 ```
 
 Parse the JSON output to identify:
@@ -94,7 +106,7 @@ Provide copy-paste commands in order:
 
 ```bash
 # Benchmark current performance
-python3 scripts/benchmark_ollama.py --model <model>
+python3 {SKILL_DIR}/scripts/benchmark_ollama.py --model <model>
 
 # Check GPU memory usage (NVIDIA)
 nvidia-smi

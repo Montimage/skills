@@ -80,7 +80,7 @@ Key principles:
 pre-commit run --all-files
 
 # Commit and push to trigger CI
-git add .pre-commit-config.yaml .github/
+git add .pre-commit-config.yaml .github/workflows/ci.yml
 git commit -m "ci: add pre-commit hooks and GitHub Actions"
 git push
 ```

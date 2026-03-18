@@ -20,6 +20,8 @@ git pull --rebase origin "$branch"
 
 If the working tree is dirty, stash first, sync, then pop. If `origin` is missing or conflicts occur, stop and ask the user before continuing.
 
+Note: This skill generates a report file (`CODE_REVIEW.md`) but does not modify source code, so a feature branch is not required.
+
 ## Review Modes
 
 ### Mode 1: PR/Diff Review

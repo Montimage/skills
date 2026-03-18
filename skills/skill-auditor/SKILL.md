@@ -8,6 +8,18 @@ description: Analyze agent skills for security risks, malicious patterns, and po
 
 Analyze agent skill directories for security risks and provide an install/reject verdict.
 
+## Repo Sync Before Edits (mandatory)
+
+Before generating any output files, sync with the remote to avoid conflicts:
+
+```bash
+branch="$(git rev-parse --abbrev-ref HEAD)"
+git fetch origin
+git pull --rebase origin "$branch"
+```
+
+If the working tree is dirty, stash first, sync, then pop. If `origin` is missing or conflicts occur, stop and ask the user before continuing.
+
 ## Workflow
 
 Auditing a skill follows these phases:

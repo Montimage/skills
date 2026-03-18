@@ -8,6 +8,18 @@ description: Generate cross-platform installation scripts for any software, libr
 
 Generate robust, cross-platform installation scripts with automatic environment detection, verification, and documentation.
 
+## Repo Sync Before Edits (mandatory)
+
+Before generating any output files, sync with the remote to avoid conflicts:
+
+```bash
+branch="$(git rev-parse --abbrev-ref HEAD)"
+git fetch origin
+git pull --rebase origin "$branch"
+```
+
+If the working tree is dirty, stash first, sync, then pop. If `origin` is missing or conflicts occur, stop and ask the user before continuing.
+
 ## Workflow
 
 ### Phase 1: Environment Exploration
@@ -16,7 +28,7 @@ Gather comprehensive system information:
 
 ```bash
 # Run the environment explorer script
-python3 scripts/env_explorer.py
+python3 {SKILL_DIR}/scripts/env_explorer.py
 ```
 
 The script detects:
@@ -42,7 +54,7 @@ Based on the environment analysis and target software:
 Create the plan using:
 
 ```bash
-python3 scripts/plan_generator.py --target "<software_name>" --env-file env_info.json
+python3 {SKILL_DIR}/scripts/plan_generator.py --target "<software_name>" --env-file env_info.json
 ```
 
 Plan structure:
@@ -64,7 +76,7 @@ steps:
 Execute the plan with real-time verification:
 
 ```bash
-python3 scripts/executor.py --plan installation_plan.yaml
+python3 {SKILL_DIR}/scripts/executor.py --plan installation_plan.yaml
 ```
 
 Execution behavior:
@@ -79,7 +91,7 @@ Execution behavior:
 After successful installation, generate usage documentation:
 
 ```bash
-python3 scripts/doc_generator.py --target "<software_name>" --plan installation_plan.yaml
+python3 {SKILL_DIR}/scripts/doc_generator.py --target "<software_name>" --plan installation_plan.yaml
 ```
 
 Output includes:

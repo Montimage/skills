@@ -2,7 +2,6 @@
 name: skill-creator
 version: 1.1.0
 description: Create new skills, modify and improve existing skills, and measure skill performance. Use when users want to create a skill from scratch, update or optimize an existing skill, package a skill for distribution, or iterate on skill quality. Trigger this skill whenever the user says "create a skill", "build a skill", "make a skill for X", "update this skill", "improve this skill", "package this skill", or mentions wanting to extend Claude's capabilities with specialized workflows or tools.
-license: Complete terms in LICENSE.txt
 ---
 
 # Skill Creator
@@ -105,13 +104,14 @@ Files not intended to be loaded into context, but rather used within the output 
 
 A skill should only contain essential files that directly support its functionality. Do NOT create extraneous documentation or auxiliary files, including:
 
-- README.md
 - INSTALLATION_GUIDE.md
 - QUICK_REFERENCE.md
 - CHANGELOG.md
 - etc.
 
-The skill should only contain the information needed for an AI agent to do the job at hand. It should not contain auxilary context about the process that went into creating it, setup and testing procedures, user-facing documentation, etc. Creating additional documentation files just adds clutter and confusion.
+**Exception: README.md is required.** Every skill must include a README.md for human-readable documentation. This is what users see when browsing the skill catalog — it should be scannable and informative without reading the full SKILL.md.
+
+Beyond SKILL.md and README.md, the skill should only contain the information needed for an AI agent to do the job at hand. It should not contain auxiliary context about the process that went into creating it, setup and testing procedures, or other user-facing documentation. Creating additional documentation files just adds clutter and confusion.
 
 ### Progressive Disclosure Design Principle
 
