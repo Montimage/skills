@@ -1,0 +1,107 @@
+{
+  "version": 1,
+  "updated": "2026-03-25T10:10:00Z",
+  "source": "/issue-triage",
+  "analyzed_count": 6,
+  "issues": [
+    {
+      "number": 3,
+      "title": "Update oss-ready skill via skill-creator",
+      "type": "improvement",
+      "priority": "P3",
+      "blocks": [],
+      "blocked_by": [],
+      "status": "ready",
+      "stale_days": null,
+      "labels": ["improvement", "skills", "maintenance"],
+      "affected_files": ["skills/oss-ready/SKILL.md"],
+      "updated_at": "2026-03-25T10:02:50Z",
+      "potentially_fixed_by": null
+    },
+    {
+      "number": 4,
+      "title": "Update devops-pipeline skill via skill-creator",
+      "type": "improvement",
+      "priority": "P3",
+      "blocks": [],
+      "blocked_by": [],
+      "status": "ready",
+      "stale_days": null,
+      "labels": ["improvement", "skills", "maintenance"],
+      "affected_files": ["skills/devops-pipeline/SKILL.md"],
+      "updated_at": "2026-03-25T10:02:54Z",
+      "potentially_fixed_by": null
+    },
+    {
+      "number": 6,
+      "title": "Update docs-generator skill via skill-creator",
+      "type": "improvement",
+      "priority": "P3",
+      "blocks": [],
+      "blocked_by": [],
+      "status": "ready",
+      "stale_days": null,
+      "labels": ["improvement", "skills", "maintenance"],
+      "affected_files": ["skills/docs-generator/SKILL.md"],
+      "updated_at": "2026-03-25T10:03:01Z",
+      "potentially_fixed_by": null
+    },
+    {
+      "number": 7,
+      "title": "Update skill-auditor skill via skill-creator",
+      "type": "improvement",
+      "priority": "P3",
+      "blocks": [],
+      "blocked_by": [],
+      "status": "ready",
+      "stale_days": null,
+      "labels": ["improvement", "skills", "maintenance"],
+      "affected_files": ["skills/skill-auditor/SKILL.md"],
+      "updated_at": "2026-03-25T10:03:06Z",
+      "potentially_fixed_by": null
+    },
+    {
+      "number": 8,
+      "title": "Update install-script-generator skill via skill-creator",
+      "type": "improvement",
+      "priority": "P3",
+      "blocks": [],
+      "blocked_by": [],
+      "status": "ready",
+      "stale_days": null,
+      "labels": ["improvement", "skills", "maintenance"],
+      "affected_files": ["skills/install-script-generator/SKILL.md"],
+      "updated_at": "2026-03-25T10:03:08Z",
+      "potentially_fixed_by": null
+    },
+    {
+      "number": 11,
+      "title": "Update test-coverage skill via skill-creator",
+      "type": "improvement",
+      "priority": "P3",
+      "blocks": [],
+      "blocked_by": [],
+      "status": "ready",
+      "stale_days": null,
+      "labels": ["improvement", "skills", "maintenance"],
+      "affected_files": ["skills/test-coverage/SKILL.md"],
+      "updated_at": "2026-03-25T10:03:23Z",
+      "potentially_fixed_by": null
+    }
+  ],
+  "summary": {
+    "parallel_groups": [[3, 4, 6, 7, 8, 11]],
+    "stale_count": 0,
+    "stale_threshold_days": 14,
+    "potentially_fixed_count": 0,
+    "suggested_order": [3, 4, 6, 7, 8, 11],
+    "circular_deps": []
+  },
+  "history": [
+    {
+      "time": "2026-03-25T10:10:00Z",
+      "source": "/issue-triage",
+      "changes": "Full re-triage (6 issues)"
+    }
+  ]
+}
