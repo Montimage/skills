@@ -1,7 +1,8 @@
 ---
 name: oss-ready
-version: 1.3.0
+version: 1.4.0
 description: Transform projects into professional open-source repositories with standard components. Use when users ask to "make this open source", "add open source files", "setup OSS standards", "create contributing guide", "add license", "prepare for public release", "add CODE_OF_CONDUCT", "add SECURITY.md", "GitHub templates", or want to prepare a project for public release with README, CONTRIBUTING, LICENSE, and GitHub templates. Trigger this skill whenever the user mentions open-sourcing, public repos, community standards, or making a project contribution-ready — even if they just say "let's open source this".
+author: Montimage
 ---
 
 # OSS Ready
@@ -37,7 +38,23 @@ Identify:
 - Existing documentation to preserve
 - Package manager (npm, pip, cargo, etc.)
 
+**Use sub-agents for parallel discovery.** Launch multiple Agent tool calls concurrently to keep the main context clean:
+
+- **Agent 1 — Stack detection**: Scan for `package.json`, `pyproject.toml`, `Cargo.toml`, `go.mod`, `pom.xml`, and identify the primary language(s), build tools, and package manager. Return a structured summary.
+- **Agent 2 — Existing docs inventory**: List all existing documentation files (README, CONTRIBUTING, LICENSE, docs/, .github/) and summarize their current state — present, missing, or outdated. Return a checklist.
+- **Agent 3 — Project purpose**: Read the main entry point, existing README, and any project description fields to determine the project's purpose and key features. Return a short project summary.
+
+Collect the results from all three agents before proceeding.
+
 ### 2. Create/Update Core Files
+
+**Use sub-agents for parallel file creation.** The files below are independent of each other. Dispatch them concurrently using the Agent tool, then collect results:
+
+- **Agent A — README.md**: Enhance the existing README (or create one) with the sections listed below. Use the project summary from Step 1.
+- **Agent B — CONTRIBUTING.md**: Generate the contributing guide with the sections listed below. Use the stack info from Step 1.
+- **Agent C — Asset files**: Copy LICENSE, CODE_OF_CONDUCT.md, and SECURITY.md from the skill assets directory and replace placeholders.
+
+Each agent should return the path(s) of files it created or updated.
 
 **README.md** - Enhance with:
 - Project overview and motivation
@@ -88,7 +105,15 @@ cp "$SKILL_ASSETS/.github/ISSUE_TEMPLATE/feature_request.md" .github/ISSUE_TEMPL
 cp "$SKILL_ASSETS/.github/PULL_REQUEST_TEMPLATE.md" .github/
 ```
 
-### 4. Create Documentation Structure
+### 4. Create Documentation Structure and Metadata
+
+**Use sub-agents for parallel execution.** Steps 4, 5, and 6 are independent — dispatch them concurrently:
+
+- **Agent D — Documentation structure**: Create the `docs/` directory and populate the relevant files based on the project type identified in Step 1.
+- **Agent E — Project metadata**: Update the package file (`package.json`, `pyproject.toml`, etc.) with OSS-standard fields.
+- **Agent F — .gitignore**: Verify and update `.gitignore` with comprehensive patterns for the detected tech stack.
+
+Each agent should return a summary of what it created or updated.
 
 ```
 docs/
