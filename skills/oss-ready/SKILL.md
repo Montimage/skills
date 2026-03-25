@@ -1,8 +1,10 @@
 ---
 name: oss-ready
-version: 1.4.0
+effort: high
 description: Transform projects into professional open-source repositories with standard components. Use when users ask to "make this open source", "add open source files", "setup OSS standards", "create contributing guide", "add license", "prepare for public release", "add CODE_OF_CONDUCT", "add SECURITY.md", "GitHub templates", or want to prepare a project for public release with README, CONTRIBUTING, LICENSE, and GitHub templates. Trigger this skill whenever the user mentions open-sourcing, public repos, community standards, or making a project contribution-ready — even if they just say "let's open source this".
-author: Montimage
+metadata:
+  version: 1.4.0
+  creator: Montimage
 ---
 
 # OSS Ready

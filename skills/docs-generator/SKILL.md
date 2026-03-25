@@ -1,8 +1,10 @@
 ---
 name: docs-generator
-version: 1.3.0
+effort: medium
 description: Restructure project documentation for clarity and accessibility. Use when users ask to "organize docs", "generate documentation", "improve doc structure", "restructure README", "write docs", "create README", "document my code", "add API docs", "document this project", "help with documentation", or need to reorganize scattered documentation into a coherent structure. Analyzes project type and creates appropriate documentation hierarchy. Trigger this skill whenever the user needs documentation created, reorganized, or improved — even if they just say something like "this project needs docs" or "the README is a mess".
-author: Montimage
+metadata:
+  version: 1.3.0
+  creator: Montimage
 ---
 
 # Documentation Generator

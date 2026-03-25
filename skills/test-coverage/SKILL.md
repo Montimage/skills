@@ -1,8 +1,10 @@
 ---
 name: test-coverage
-version: 1.3.0
+effort: high
 description: Expand unit test coverage by targeting untested branches and edge cases. Use when users ask to "increase test coverage", "add more tests", "expand unit tests", "cover edge cases", "improve test coverage", "find untested code", "what's not tested", "run coverage report", "write missing tests", or want to identify and fill gaps in existing test suites. Adapts to project's testing framework. Trigger this skill whenever the user mentions test gaps, untested code, coverage percentages, or wants to harden their test suite.
-author: Montimage
+metadata:
+  version: 1.3.0
+  creator: Montimage
 ---
 
 # Test Coverage
