@@ -1,7 +1,8 @@
 ---
 name: install-script-generator
-version: 1.1.0
+version: 1.2.0
 description: Generate cross-platform installation scripts for any software, library, or module. Use when users ask to "create an installer", "generate installation script", "automate installation", "setup script for X", "install X on any OS", "write an install script", "deployment script", or need automated deployment across Windows, Linux, and macOS. Follows a three-phase approach with environment detection, installation planning with verification/rollback, and documentation generation. Trigger this skill whenever the user wants to automate installing or deploying software, even if they just say "how do I install X everywhere".
+author: Montimage
 ---
 
 # Install Script Generator
@@ -30,6 +31,14 @@ Gather comprehensive system information:
 # Run the environment explorer script
 python3 {SKILL_DIR}/scripts/env_explorer.py
 ```
+
+**Use sub-agents for parallel discovery.** Launch multiple Agent tool calls concurrently to keep the main context clean:
+
+- **Agent 1 — System detection**: Run `env_explorer.py` and parse the JSON output. Detect OS, version, CPU architecture, and user permissions (admin/sudo availability). Return a structured summary.
+- **Agent 2 — Package manager inventory**: Identify all available package managers (apt, yum, brew, choco, winget) and their versions. Check shell environment (bash, zsh, powershell, cmd). Return a capability list.
+- **Agent 3 — Existing dependencies**: Scan for already-installed dependencies and their versions relevant to the target software. Return a dependency status report.
+
+Collect the results from all three agents before proceeding.
 
 The script detects:
 - Operating system (Windows/Linux/macOS) and version
@@ -93,6 +102,14 @@ After successful installation, generate usage documentation:
 ```bash
 python3 {SKILL_DIR}/scripts/doc_generator.py --target "<software_name>" --plan installation_plan.yaml
 ```
+
+**Use sub-agents for parallel documentation.** The documentation sections are independent of each other. Dispatch them concurrently using the Agent tool, then collect results:
+
+- **Agent A — Installation report**: Generate `install_report.md` with the execution log, step-by-step status, and any warnings or errors encountered during installation.
+- **Agent B — Usage guide**: Generate `USAGE_GUIDE.md` with a quick start guide, common commands/usage examples, and troubleshooting tips based on the installed software.
+- **Agent C — Uninstall & maintenance**: Generate the uninstallation instructions and maintenance notes (upgrade paths, configuration locations, log file paths).
+
+Each agent should return the path(s) of files it created or updated.
 
 Output includes:
 - Installation summary (what was installed, where)
