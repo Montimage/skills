@@ -1,7 +1,8 @@
 ---
 name: docs-generator
-version: 1.2.0
+version: 1.3.0
 description: Restructure project documentation for clarity and accessibility. Use when users ask to "organize docs", "generate documentation", "improve doc structure", "restructure README", "write docs", "create README", "document my code", "add API docs", "document this project", "help with documentation", or need to reorganize scattered documentation into a coherent structure. Analyzes project type and creates appropriate documentation hierarchy. Trigger this skill whenever the user needs documentation created, reorganized, or improved — even if they just say something like "this project needs docs" or "the README is a mess".
+author: Montimage
 ---
 
 # Documentation Generator
@@ -31,47 +32,44 @@ Before making any changes:
 
 ### 1. Analyze Project
 
-Scan the project to understand its shape:
+Scan the project to understand its shape.
 
-```bash
-# Detect project type and stack
-ls -la package.json pyproject.toml Cargo.toml go.mod pom.xml 2>/dev/null
-ls -la README.md docs/ 2>/dev/null
-```
+**Use sub-agents for parallel discovery.** Launch multiple Agent tool calls concurrently to keep the main context clean:
 
-Identify:
-- **Project type**: Library, API, web app, CLI, microservices
-- **Architecture**: Monorepo, multi-package, single module
-- **User personas**: End users, developers, operators
-- **Existing docs**: What exists, what's outdated, what's missing
+- **Agent 1 — Stack detection**: Scan for `package.json`, `pyproject.toml`, `Cargo.toml`, `go.mod`, `pom.xml`, and identify the project type (library, API, web app, CLI, microservices), architecture (monorepo, multi-package, single module), and primary language(s). Return a structured summary.
+- **Agent 2 — Existing docs inventory**: List all existing documentation files (README.md, docs/, CONTRIBUTING.md, CHANGELOG.md, etc.) and summarize their current state — present, missing, or outdated. Return a checklist.
+- **Agent 3 — User personas & project purpose**: Read the main entry point, existing README, and any project description fields to determine the project's purpose, key features, and target user personas (end users, developers, operators). Return a short summary.
+
+Collect the results from all three agents before proceeding.
 
 ### 2. Restructure Documentation
 
-**Root README.md** — Streamline as the project's front door:
-- Project name + one-line description
-- Badges (build status, version, license)
-- Key features (bullet list, 3-5 items)
-- Quickstart (install + first use in < 5 min)
-- Modules/components summary with links
-- Contributing link + License
+**Use sub-agents for parallel file creation.** The documentation targets below are independent of each other. Dispatch them concurrently using the Agent tool, then collect results:
 
-**Component READMEs** — Add per module/package/service:
-- Purpose and responsibilities
-- Setup instructions specific to the component
-- Testing commands
+- **Agent A — Root README.md**: Streamline as the project's front door using the project summary from Step 1. Include:
+  - Project name + one-line description
+  - Badges (build status, version, license)
+  - Key features (bullet list, 3-5 items)
+  - Quickstart (install + first use in < 5 min)
+  - Modules/components summary with links
+  - Contributing link + License
+- **Agent B — Component READMEs**: Add per module/package/service documentation using the architecture info from Step 1. Include:
+  - Purpose and responsibilities
+  - Setup instructions specific to the component
+  - Testing commands
+- **Agent C — docs/ directory**: Create only the files that are relevant to the project type identified in Step 1. Target structure:
+  ```
+  docs/
+  ├── architecture.md      # System design, component diagrams
+  ├── api-reference.md     # Endpoints, authentication, examples
+  ├── database.md          # Schema, migrations, ER diagrams
+  ├── deployment.md        # Production setup, infrastructure
+  ├── development.md       # Local setup, contribution workflow
+  ├── troubleshooting.md   # Common issues and solutions
+  └── user-guide.md        # End-user documentation
+  ```
 
-**Centralize in `docs/`** — Only create files that are relevant to the project type:
-
-```
-docs/
-├── architecture.md      # System design, component diagrams
-├── api-reference.md     # Endpoints, authentication, examples
-├── database.md          # Schema, migrations, ER diagrams
-├── deployment.md        # Production setup, infrastructure
-├── development.md       # Local setup, contribution workflow
-├── troubleshooting.md   # Common issues and solutions
-└── user-guide.md        # End-user documentation
-```
+Each agent should return the path(s) of files it created or updated.
 
 Not every project needs all of these. A CLI tool likely needs a user-guide but not an api-reference. A library needs api-reference but not deployment. Use judgment.
 
