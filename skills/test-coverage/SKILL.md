@@ -1,7 +1,8 @@
 ---
 name: test-coverage
-version: 1.2.0
+version: 1.3.0
 description: Expand unit test coverage by targeting untested branches and edge cases. Use when users ask to "increase test coverage", "add more tests", "expand unit tests", "cover edge cases", "improve test coverage", "find untested code", "what's not tested", "run coverage report", "write missing tests", or want to identify and fill gaps in existing test suites. Adapts to project's testing framework. Trigger this skill whenever the user mentions test gaps, untested code, coverage percentages, or wants to harden their test suite.
+author: Montimage
 ---
 
 # Test Coverage
@@ -31,7 +32,14 @@ Before making any changes:
 
 ### 1. Analyze Coverage
 
-Run the appropriate coverage command for the project's stack:
+**Use sub-agents for parallel discovery.** Launch multiple Agent tool calls concurrently to keep the main context clean:
+
+- **Agent 1 — Stack detection**: Scan for `package.json`, `tsconfig.json`, `pyproject.toml`, `setup.py`, `Cargo.toml`, `go.mod`, and identify the primary language(s), testing framework, and coverage tool. Check for existing test configuration (jest.config, vitest.config, pytest.ini, .coveragerc). Return a structured summary.
+- **Agent 2 — Test inventory**: List all existing test files and directories, identify the testing patterns in use (file naming, directory structure, assertion style). Return a checklist of test locations and conventions.
+
+Collect the results from both agents before proceeding.
+
+Then run the appropriate coverage command for the project's stack:
 
 ```bash
 # JavaScript/TypeScript (Jest)
@@ -57,7 +65,11 @@ From the report, identify:
 
 ### 2. Identify Test Gaps
 
-Read the source files with low coverage and look for:
+**Use sub-agents for parallel file analysis.** When multiple low-coverage files are identified, dispatch independent agents to analyze them concurrently:
+
+- **Agent per file group**: For each low-coverage file (or small group of related files), launch a sub-agent to read the source and identify specific untested code paths. Each agent should return a list of gaps with line numbers and suggested test scenarios.
+
+Each agent should look for:
 - **Logical branches**: if/else, switch/match, ternary operators
 - **Error paths**: try/catch, error returns, validation failures
 - **Boundary values**: min, max, zero, empty string, null/undefined, off-by-one
@@ -65,7 +77,7 @@ Read the source files with low coverage and look for:
 - **State transitions**: before/after mutations, async race conditions
 - **Integration points**: API calls, database queries, file I/O
 
-Prioritize gaps by risk: error paths and boundary values cause the most production bugs.
+Collect all agent results and prioritize gaps by risk: error paths and boundary values cause the most production bugs.
 
 ### 3. Write Tests
 
@@ -78,6 +90,12 @@ Use the project's existing testing framework and follow its conventions. Detect 
 | Python | pytest | `tests/` or `test_*.py` |
 | Go | testing | `*_test.go` in same package |
 | Rust | built-in | `#[cfg(test)]` module in same file |
+
+**Use sub-agents for parallel test writing.** When gaps span multiple independent files or modules, dispatch sub-agents concurrently to write tests in parallel:
+
+- **Agent per test file**: For each source file (or module) that needs new tests, launch a sub-agent to write the test cases. Each agent receives the gap analysis from Step 2 and the project conventions from Step 1. Each agent should return the path of the test file it created or updated.
+
+Collect all agent results, then verify no conflicts between test files (e.g., duplicate test names, shared fixtures).
 
 For each gap, write focused test cases:
 - One assertion per logical concept (a test can have multiple asserts if they test the same behavior)
