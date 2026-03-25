@@ -52,7 +52,7 @@ Collect the results from all three agents before proceeding.
 
 - **Agent A — README.md**: Enhance the existing README (or create one) with the sections listed below. Use the project summary from Step 1.
 - **Agent B — CONTRIBUTING.md**: Generate the contributing guide with the sections listed below. Use the stack info from Step 1.
-- **Agent C — Asset files**: Copy LICENSE, CODE_OF_CONDUCT.md, and SECURITY.md from the skill assets directory and replace placeholders.
+- **Agent C — Asset files**: Copy LICENSE, CODE_OF_CONDUCT.md, and SECURITY.md from the skill assets directory using `cp` commands only (never read+write — content triggers filtering). Replace placeholders with `sed` after copying.
 
 Each agent should return the path(s) of files it created or updated.
 
@@ -105,37 +105,28 @@ cp "$SKILL_ASSETS/.github/ISSUE_TEMPLATE/feature_request.md" .github/ISSUE_TEMPL
 cp "$SKILL_ASSETS/.github/PULL_REQUEST_TEMPLATE.md" .github/
 ```
 
-### 4. Create Documentation Structure and Metadata
+### 4. Create Documentation Structure, Metadata, and .gitignore
 
-**Use sub-agents for parallel execution.** Steps 4, 5, and 6 are independent — dispatch them concurrently:
+**Use sub-agents for parallel execution.** These tasks are independent — dispatch them concurrently:
 
-- **Agent D — Documentation structure**: Create the `docs/` directory and populate the relevant files based on the project type identified in Step 1.
-- **Agent E — Project metadata**: Update the package file (`package.json`, `pyproject.toml`, etc.) with OSS-standard fields.
+- **Agent D — Documentation structure**: Create the `docs/` directory and populate the relevant files based on the project type identified in Step 1. Target structure:
+  ```
+  docs/
+  ├── ARCHITECTURE.md    # System design, components
+  ├── DEVELOPMENT.md     # Dev setup, debugging
+  ├── DEPLOYMENT.md      # Production deployment
+  └── CHANGELOG.md       # Version history
+  ```
+- **Agent E — Project metadata**: Update the package file with OSS-standard fields based on the tech stack:
+  - **Node.js**: `package.json` — name, description, keywords, repository, license
+  - **Python**: `pyproject.toml` or `setup.py`
+  - **Rust**: `Cargo.toml`
+  - **Go**: `go.mod` + README badges
 - **Agent F — .gitignore**: Verify and update `.gitignore` with comprehensive patterns for the detected tech stack.
 
 Each agent should return a summary of what it created or updated.
 
-```
-docs/
-├── ARCHITECTURE.md    # System design, components
-├── DEVELOPMENT.md     # Dev setup, debugging
-├── DEPLOYMENT.md      # Production deployment
-└── CHANGELOG.md       # Version history
-```
-
-### 5. Update Project Metadata
-
-Update package file based on tech stack:
-- **Node.js**: `package.json` - name, description, keywords, repository, license
-- **Python**: `pyproject.toml` or `setup.py`
-- **Rust**: `Cargo.toml`
-- **Go**: `go.mod` + README badges
-
-### 6. Ensure .gitignore
-
-Verify comprehensive patterns for the tech stack.
-
-### 7. Present Checklist
+### 5. Present Checklist
 
 After completion, show:
 - [x] Files created/updated
