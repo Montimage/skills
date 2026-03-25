@@ -1,7 +1,8 @@
 ---
 name: devops-pipeline
-version: 1.1.0
+version: 1.2.0
 description: Implement pre-commit hooks and GitHub Actions for quality assurance. Use when asked to "setup CI/CD", "add pre-commit hooks", "create GitHub Actions", "setup quality gates", "automate testing", "add linting to CI", "setup code quality checks", "configure CI pipeline", "add automated checks", or any DevOps automation for code quality. Detects project type and configures appropriate tools. Trigger this skill whenever the user mentions CI, CD, pre-commit, GitHub Actions, linting automation, or quality gates — even if they don't use those exact terms.
+author: Montimage
 ---
 
 # DevOps Pipeline
@@ -31,49 +32,32 @@ Before making any changes:
 
 ### 1. Analyze Project
 
-Detect project characteristics:
+Detect project characteristics.
 
-```bash
-# Check for package files and configs
-ls -la package.json pyproject.toml Cargo.toml go.mod pom.xml build.gradle *.csproj 2>/dev/null
-ls -la .eslintrc* .prettierrc* tsconfig.json mypy.ini setup.cfg ruff.toml 2>/dev/null
-ls -la .pre-commit-config.yaml .github/workflows/*.yml 2>/dev/null
-```
+**Use sub-agents for parallel discovery.** Launch multiple Agent tool calls concurrently to keep the main context clean:
 
-Identify:
-- **Languages**: JS/TS, Python, Go, Rust, Java, C#, etc.
-- **Frameworks**: React, Next.js, Django, FastAPI, etc.
-- **Build system**: npm, yarn, pnpm, pip, poetry, cargo, go, maven, gradle
-- **Existing tooling**: Linters, formatters, type checkers already configured
+- **Agent 1 — Stack detection**: Scan for `package.json`, `pyproject.toml`, `Cargo.toml`, `go.mod`, `pom.xml`, `build.gradle`, `*.csproj` and identify the primary language(s), frameworks (React, Next.js, Django, FastAPI, etc.), and build tools (npm, yarn, pnpm, pip, poetry, cargo, go, maven, gradle). Return a structured summary.
+- **Agent 2 — Existing tooling inventory**: Check for existing linter/formatter configs (`.eslintrc*`, `.prettierrc*`, `tsconfig.json`, `mypy.ini`, `setup.cfg`, `ruff.toml`) and existing CI configs (`.pre-commit-config.yaml`, `.github/workflows/*.yml`). Return a checklist of what is present vs missing.
+- **Agent 3 — Repository conventions**: Inspect the repo for branch naming conventions, commit message style, and any existing contribution guidelines. Return the conventions found.
 
-### 2. Configure Pre-commit Hooks
+Collect the results from all three agents before proceeding.
 
-Install pre-commit framework:
+### 2. Configure Pre-commit Hooks and GitHub Actions
 
-```bash
-pip install pre-commit  # or brew install pre-commit
-```
+**Use sub-agents for parallel file creation.** The pre-commit config and GitHub Actions workflow are independent of each other. Dispatch them concurrently using the Agent tool, then collect results:
 
-Create `.pre-commit-config.yaml` based on detected stack. See [references/precommit-configs.md](references/precommit-configs.md) for language-specific configurations.
+- **Agent A — Pre-commit hooks**: Install the pre-commit framework (`pip install pre-commit` or `brew install pre-commit`). Create `.pre-commit-config.yaml` based on the detected stack from Step 1. Use [references/precommit-configs.md](references/precommit-configs.md) for language-specific configurations. Install hooks with `pre-commit install`. Return the path of the created config file and a summary of hooks configured.
+- **Agent B — GitHub Actions workflow**: Create `.github/workflows/ci.yml` mirroring the pre-commit checks. Use [references/github-actions.md](references/github-actions.md) for workflow templates. Follow these key principles:
+  - Mirror pre-commit checks for consistency
+  - Use caching for dependencies
+  - Run on push and pull_request
+  - Add matrix testing for multiple versions if needed
 
-Install hooks:
+  Return the path of the created workflow file and a summary of jobs configured.
 
-```bash
-pre-commit install
-pre-commit run --all-files  # Test on existing code
-```
+Each agent should return the path(s) of files it created or updated.
 
-### 3. Create GitHub Actions Workflows
-
-Create `.github/workflows/ci.yml` mirroring pre-commit checks. See [references/github-actions.md](references/github-actions.md) for workflow templates.
-
-Key principles:
-- Mirror pre-commit checks for consistency
-- Use caching for dependencies
-- Run on push and pull_request
-- Add matrix testing for multiple versions if needed
-
-### 4. Verify Pipeline
+### 3. Verify Pipeline
 
 ```bash
 # Test pre-commit locally
