@@ -1,0 +1,42 @@
+{
+  "skill": "oss-ready-flow",
+  "version": "1.0.0",
+  "description": "Minimal smoke tests: skill triggers on full-OSS-prep phrasing and walks through the 6-step orchestration without crashing.",
+  "cases": [
+    {
+      "id": "trigger-1-full-oss-prep",
+      "prompt": "Walk this project through the full OSS release workflow end-to-end so it's ready to make public.",
+      "expected_behavior": [
+        "Skill 'oss-ready-flow' is invoked (not 'oss-ready' alone, not 'docs-generator' alone).",
+        "Step 0 setup runs: confirms working directory, runs Repo Sync, asks for license + SECURITY contact email.",
+        "Step 1 spawns a read-only Auditor sub-agent and emits a Step Completion Report.",
+        "Main agent waits for user 'yes / skip / stop' before dispatching step 2."
+      ]
+    },
+    {
+      "id": "trigger-2-branch-cleanup-step",
+      "prompt": "I want to clean up branches as part of getting this repo open-source ready. Use the OSS flow.",
+      "expected_behavior": [
+        "Skill recognises this is an OSS-flow request, starts at step 1 (audit), and continues to step 2 (branches).",
+        "Step 2 produces a per-branch plan and asks for per-branch approval; never deletes silently.",
+        "Plan is written to .oss-ready/02-branches.md."
+      ]
+    },
+    {
+      "id": "negative-1-audit-only",
+      "prompt": "Run an OSS readiness audit on this repo.",
+      "expected_behavior": [
+        "Skill 'oss-ready-flow' does NOT trigger (audit-only is the 'oss-ready' skill's territory).",
+        "The 'oss-ready' skill triggers instead."
+      ]
+    },
+    {
+      "id": "negative-2-readme-only",
+      "prompt": "Rewrite my README to be cleaner.",
+      "expected_behavior": [
+        "Skill 'oss-ready-flow' does NOT trigger.",
+        "A doc-focused or README-focused skill (docs-generator or similar) triggers, or the agent edits directly without a skill."
+      ]
+    }
+  ]
+}
