@@ -1,15 +1,15 @@
 ---
 name: oss-ready
 effort: high
-description: Transform projects into professional open-source repositories with standard components. Use when users ask to "make this open source", "add open source files", "setup OSS standards", "create contributing guide", "add license", "prepare for public release", "add CODE_OF_CONDUCT", "add SECURITY.md", "GitHub templates", or want to prepare a project for public release with README, CONTRIBUTING, LICENSE, and GitHub templates. Trigger this skill whenever the user mentions open-sourcing, public repos, community standards, or making a project contribution-ready — even if they just say "let's open source this".
+description: "Add OSS-standard files (README, CONTRIBUTING, LICENSE, CODE_OF_CONDUCT, SECURITY, GitHub templates) and run an 8-section readiness audit. Use for 'make this open source', 'OSS readiness', 'public release'. Skip for marketing pages or closed code."
 metadata:
-  version: 1.4.0
+  version: 1.5.0
   creator: Montimage
 ---
 
 # OSS Ready
 
-Transform projects into professional open-source repositories with standard components.
+Transform projects into professional open-source repositories with standard components, GitHub templates, and an 8-section OSS readiness audit.
 
 ## Repo Sync Before Edits (mandatory)
 
@@ -104,7 +104,8 @@ Copy from the skill's `assets/.github/` using shell commands:
 mkdir -p .github/ISSUE_TEMPLATE
 cp "$SKILL_ASSETS/.github/ISSUE_TEMPLATE/bug_report.md" .github/ISSUE_TEMPLATE/
 cp "$SKILL_ASSETS/.github/ISSUE_TEMPLATE/feature_request.md" .github/ISSUE_TEMPLATE/
-cp "$SKILL_ASSETS/.github/PULL_REQUEST_TEMPLATE.md" .github/
+cp "$SKILL_ASSETS/PULL_REQUEST_TEMPLATE.md" .github/ 2>/dev/null || \
+  cp "$SKILL_ASSETS/.github/PULL_REQUEST_TEMPLATE.md" .github/
 ```
 
 ### 4. Create Documentation Structure, Metadata, and .gitignore
@@ -128,26 +129,136 @@ cp "$SKILL_ASSETS/.github/PULL_REQUEST_TEMPLATE.md" .github/
 
 Each agent should return a summary of what it created or updated.
 
-### 5. Present Checklist
+### 5. OSS Readiness Audit
 
-After completion, show:
-- [x] Files created/updated
-- [ ] Items needing manual review
-- Recommendations for next steps
+Run the full **Open Source Project Checklist** against the target repo. Each item is binary (done / not done). For each item, mark the status and capture a one-line justification or pointer (file path, command, screenshot URL, etc.).
+
+**Drop the checklist into the repo** so maintainers can track progress between sessions:
+
+```bash
+cp "$SKILL_ASSETS/OSS_READINESS_CHECKLIST.md" docs/OSS_READINESS_CHECKLIST.md
+```
+
+**Use sub-agents to run the audit in parallel.** Each section is independent — dispatch concurrently and collect results. The eight sections plus bonus items map to eight + one sub-agents:
+
+- **Audit-1 License**
+- **Audit-2 Codebase Cleanup**
+- **Audit-3 Repository Setup** (requires `gh` CLI for GitHub-side checks)
+- **Audit-4 Essential Documentation**
+- **Audit-5 Testing & Automation**
+- **Audit-6 GitHub Settings & Policies** (requires `gh` CLI)
+- **Audit-7 Packaging & Installation**
+- **Audit-8 Final Polish & Release**
+- **Audit-Bonus** for the "Great" items
+
+Each audit agent should:
+1. Check each checklist item using shell tools (`grep`, `gh`, `ls`, `git`).
+2. Return a structured result: `{item, status: done|missing|n/a, evidence}`.
+3. Never modify the repo — auditing is read-only here.
+
+#### Open Source Project Checklist
+
+**1. License**
+- [ ] Choose a standard license (MIT, Apache 2.0, or GPLv3 recommended)
+- [ ] Add `LICENSE` file in root (exact license text, no modifications)
+- [ ] License is detected by GitHub (shows in repo header) — verify with `gh repo view --json licenseInfo`
+
+**2. Codebase Cleanup**
+- [ ] Remove all secrets, keys, passwords, `.env` examples (use `.env.example`)
+- [ ] Proper `.gitignore` (language-specific, ignore build artifacts)
+- [ ] Consistent code style (linter + formatter run)
+- [ ] No unnecessary files (build folders, caches, IDE files)
+- [ ] Sensitive history cleaned if needed (`git filter-repo`)
+
+**3. Repository Setup**
+- [ ] Clear, descriptive repo name
+- [ ] One-sentence description
+- [ ] Relevant topics/tags added — verify with `gh repo view --json repositoryTopics`
+- [ ] Repository is **Public**
+- [ ] Issues, Discussions, and Projects enabled
+
+**4. Essential Documentation**
+- [ ] `README.md` — well-structured with: title + tagline, badges, features, install & usage examples, screenshot/GIF, contribution section, license & acknowledgments
+- [ ] `CONTRIBUTING.md` — setup, coding standards, PR process
+- [ ] `CODE_OF_CONDUCT.md` (Contributor Covenant recommended)
+- [ ] `SECURITY.md` — vulnerability reporting instructions
+- [ ] Issue & PR templates (`.github/ISSUE_TEMPLATE/` and `PULL_REQUEST_TEMPLATE.md`)
+
+**5. Testing & Automation**
+- [ ] Unit/integration tests exist and pass
+- [ ] CI/CD pipeline (GitHub Actions recommended): lint + test on push/PR, build verification
+- [ ] Dependabot enabled for dependency updates (`.github/dependabot.yml`)
+- [ ] Code coverage reporting (optional but strong signal)
+
+**6. GitHub Settings & Policies**
+- [ ] Default branch = `main` — `gh repo view --json defaultBranchRef`
+- [ ] Branch protection on `main` (require PR review + status checks) — `gh api repos/{owner}/{repo}/branches/main/protection`
+- [ ] Community profile is "Healthy" (license + CoC + templates)
+- [ ] Clear issue labels (`good first issue`, `bug`, `enhancement`, etc.)
+- [ ] Repository topics and description optimized for discovery
+
+**7. Packaging & Installation**
+- [ ] Easy install command in README (e.g. `pip install .`, `npm install`)
+- [ ] Proper package metadata (`pyproject.toml`, `package.json`, `Cargo.toml`, etc.)
+- [ ] Published to package registry (PyPI, npm, crates.io) — if applicable
+
+**8. Final Polish & Release**
+- [ ] CHANGELOG.md or GitHub Releases with clear versioning
+- [ ] Roadmap or future plans visible
+- [ ] No broken links or outdated info
+- [ ] At least one other maintainer (optional)
+- [ ] First issues welcoming to new contributors (`good first issue` label populated)
+
+**Bonus "Great" Items**
+- [ ] Conventional commits
+- [ ] Architecture diagram or demo GIF in README
+- [ ] Pre-commit hooks (`.pre-commit-config.yaml`)
+- [ ] Funding file (`.github/FUNDING.yml`)
+
+#### Quick Validation
+
+Direct the maintainer to: **GitHub → Insights → Community Standards** tab. Aim for all green checks.
+
+### 6. Present Final Status Report
+
+After steps 1–5, output a Step Completion Report:
+
+```
+◆ OSS Readiness (step 6 of 6 — <repo>)
+··································································
+  Section 1 License:                √ N/3
+  Section 2 Codebase Cleanup:       √ N/5
+  Section 3 Repository Setup:       √ N/5
+  Section 4 Essential Docs:         √ N/5
+  Section 5 Testing & Automation:   √ N/4
+  Section 6 GitHub Settings:        √ N/5
+  Section 7 Packaging:              √ N/3
+  Section 8 Final Polish:           √ N/5
+  Bonus items:                      √ N/4
+  ____________________________
+  Result:                           PASS | FAIL | PARTIAL
+```
+
+Then list:
+- Files created/updated (link each to its path)
+- Items still requiring manual action (with the precise remediation step)
+- Recommended next commands (`gh repo edit`, `gh api ...`) the user can run themselves
 
 ## Guidelines
 
-- Preserve existing content - enhance, don't replace
+- Preserve existing content — enhance, don't replace
 - Use professional, welcoming tone
 - Adapt to project's actual tech stack
 - Include working examples from the actual codebase
+- Audit before fixing: run Step 5 read-only first, then offer to fix
 
 ## Assets
 
 Templates in `assets/`:
-- `LICENSE-MIT` - MIT license template
-- `CODE_OF_CONDUCT.md` - Contributor Covenant
-- `SECURITY.md` - Security policy template
+- `LICENSE-MIT` — MIT license template
+- `CODE_OF_CONDUCT.md` — Contributor Covenant
+- `SECURITY.md` — Security policy template
+- `OSS_READINESS_CHECKLIST.md` — Drop-in checklist for the target repo
 - `.github/ISSUE_TEMPLATE/bug_report.md`
 - `.github/ISSUE_TEMPLATE/feature_request.md`
 - `.github/PULL_REQUEST_TEMPLATE.md`
