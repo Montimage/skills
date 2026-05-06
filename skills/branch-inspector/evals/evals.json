@@ -1,0 +1,34 @@
+{
+  "evals": [
+    {
+      "name": "inspect_named_branch",
+      "prompt": "Inspect the branch feature/old-payment-flow against main and tell me whether I should keep it.",
+      "assertions": [
+        "Skill is triggered (branch-inspector runs).",
+        "Output includes a Branch Overview block with refs (local/remote), tip commit, commits ahead/behind main, and last activity.",
+        "Output includes a 'What this branch implements' section drawn from the diff, not just stats.",
+        "Output reports merge status including a cherry-equivalent / squash-merge check.",
+        "Output presents four explicit options (delete, archive, open PR, keep) and asks the user to choose before acting.",
+        "Skill does NOT execute destructive git commands automatically."
+      ]
+    },
+    {
+      "name": "missing_branch_arg",
+      "prompt": "Can you check this branch for cleanup?",
+      "assertions": [
+        "Skill triggers but does not silently default to the current branch.",
+        "Skill asks the user which branch to inspect."
+      ]
+    },
+    {
+      "name": "decision_archive_emits_plan",
+      "prompt": "Inspect experiment/llm-spike against main. After you show the overview, I'll tell you to archive it — give me the exact commands to do that with a tag-and-delete approach.",
+      "assertions": [
+        "Overview is produced before the plan.",
+        "When the archive decision is given, plan uses tag-and-delete: creates archive/<branch> tag, pushes the tag, deletes local and remote branch.",
+        "Plan includes a recovery note explaining how to restore the branch from the archive tag.",
+        "Skill lists commands but does not execute them."
+      ]
+    }
+  ]
+}
