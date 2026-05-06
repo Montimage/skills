@@ -9,14 +9,14 @@
 <p align="center">
   <a href="https://github.com/Montimage/skills/releases/tag/v1.1.0"><img src="https://img.shields.io/github/v/release/Montimage/skills?color=E5A630&label=Release" alt="Release"></a>
   <a href="LICENSE"><img src="https://img.shields.io/badge/License-Apache%202.0-blue.svg" alt="License"></a>
-  <a href="#the-skills"><img src="https://img.shields.io/badge/Skills-10-green.svg" alt="Skills"></a>
+  <a href="#the-skills"><img src="https://img.shields.io/badge/Skills-12-green.svg" alt="Skills"></a>
   <a href="https://github.com/Montimage/skills/stargazers"><img src="https://img.shields.io/github/stars/Montimage/skills?style=flat&color=yellow" alt="GitHub Stars"></a>
 </p>
 
 <h1 align="center">Turn Your AI Agent Into a Senior Engineer</h1>
 
 <p align="center">
-10 plug-and-play skills that give Claude Code, Codex, and OpenClaw the domain expertise<br>to review code, ship releases, harden security, and optimize infrastructure — without you writing the prompts.
+12 plug-and-play skills that give Claude Code, Codex, and OpenClaw the domain expertise<br>to review code, ship releases, harden security, and optimize infrastructure — without you writing the prompts.
 </p>
 
 <p align="center">
@@ -52,7 +52,7 @@ Each skill is a self-contained package of procedural knowledge — the exact ste
 
 ## How It Works
 
-1. **Install** — one command adds all 10 skills to your agent
+1. **Install** — one command adds all 12 skills to your agent
    ```bash
    npx skills add https://github.com/Montimage/skills
    ```
@@ -88,6 +88,7 @@ Each skill is a self-contained package of procedural knowledge — the exact ste
 |-------|---------------------|
 | **[devops-pipeline](skills/devops-pipeline/)** | Auto-detects your stack and generates pre-commit hooks + GitHub Actions CI — no YAML from scratch |
 | **[release-notes](skills/release-notes/)** | Produces categorized changelogs from git history, merged PRs, and closed issues |
+| **[branch-inspector](skills/branch-inspector/)** | Inspects a single branch against main during cleanup — overview of commits, diff, merge status, staleness, then helps you pick delete/archive/PR/keep with an action plan |
 
 ### Documentation & Open Source
 
@@ -95,6 +96,7 @@ Each skill is a self-contained package of procedural knowledge — the exact ste
 |-------|---------------------|
 | **[docs-generator](skills/docs-generator/)** | Analyzes your project and restructures documentation into a coherent hierarchy with Mermaid diagrams |
 | **[oss-ready](skills/oss-ready/)** | Adds README, CONTRIBUTING, LICENSE, CODE_OF_CONDUCT, SECURITY, and GitHub templates — tailored to your project |
+| **[oss-ready-flow](skills/oss-ready-flow/)** | End-to-end orchestrator for OSS readiness — runs the full audit, applies fixes, and verifies the result in one pass |
 
 ### Infrastructure & Optimization
 
@@ -112,7 +114,7 @@ Each skill is a self-contained package of procedural knowledge — the exact ste
 
 ## Get Started in 30 Seconds
 
-Install all 10 skills:
+Install all 12 skills:
 
 ```bash
 npx skills add https://github.com/Montimage/skills
@@ -155,7 +157,7 @@ Skills encode reusable procedural knowledge — the exact steps, checks, and con
 
 Montimage Skills gives your agent the expertise it's missing — structured workflows, security checks, and production-ready output for the tasks you do every day. Apache 2.0 licensed, free forever, installs in one command.
 
-[**Install All 10 Skills Now &rarr;**](#get-started-in-30-seconds)
+[**Install All 12 Skills Now &rarr;**](#get-started-in-30-seconds)
 
 ---
 
@@ -165,12 +167,14 @@ Montimage Skills gives your agent the expertise it's missing — structured work
 ```
 skills/
 ├── skills/                        # All agent skills
+│   ├── branch-inspector/          # Branch cleanup inspection
 │   ├── code-review/               # Code quality reviews
 │   ├── devops-pipeline/           # CI/CD and pre-commit setup
 │   ├── docs-generator/            # Documentation restructuring
 │   ├── install-script-generator/  # Cross-platform installers
 │   ├── ollama-optimizer/          # Local LLM optimization
 │   ├── oss-ready/                 # Open-source readiness
+│   ├── oss-ready-flow/            # OSS readiness orchestrator
 │   ├── release-notes/             # Changelog generation
 │   ├── skill-auditor/             # Security audit for agent skills
 │   ├── skill-creator/             # Skill authoring guide
