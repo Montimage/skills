@@ -1,3 +1,6 @@
+<!--
+Human-facing docs for the oss-ready skill. AI agents: do not read this file when invoking the skill — read SKILL.md instead.
+-->
 # OSS Ready
 
 > Transform projects into professional open-source repositories with standard components, GitHub templates, and an 8-section OSS readiness audit.

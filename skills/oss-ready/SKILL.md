@@ -1,15 +1,27 @@
 ---
 name: oss-ready
-effort: high
 description: "Add OSS-standard files (README, CONTRIBUTING, LICENSE, CODE_OF_CONDUCT, SECURITY, GitHub templates) and run an 8-section readiness audit. Use for 'make this open source', 'OSS readiness', 'public release'. Skip for marketing pages or closed code."
+effort: high
 metadata:
-  version: 1.5.0
-  creator: Montimage
+  version: 1.8.0
+  author: Montimage
 ---
 
 # OSS Ready
 
 Transform projects into professional open-source repositories with standard components, GitHub templates, and an 8-section OSS readiness audit.
+
+## Prerequisites
+
+Verify before running. Stop and tell the user if any check fails.
+
+- Target directory is a git repository (`git rev-parse --git-dir` succeeds)
+- `gh` CLI is installed and authenticated for Section 3 and 6 audits (`gh auth status`)
+- Working tree has no unrelated uncommitted edits — run `git status` first; if dirty, ask the user whether to stash or abort
+- Skill assets directory is reachable: `test -d "$SKILL_DIR/assets"`
+- Write access to the target repo
+
+If `gh` is missing, the audit still runs but Sections 3 and 6 are marked `n/a — gh CLI not available` rather than skipped silently.
 
 ## Repo Sync Before Edits (mandatory)
 
@@ -86,15 +98,21 @@ Each agent should return the path(s) of files it created or updated.
 
 **IMPORTANT — Copy asset files using shell commands only.** Some asset files (CODE_OF_CONDUCT.md, SECURITY.md) contain language about harassment, abuse, and vulnerability disclosure that **will trigger content filtering** if you attempt to read and re-write the content. Always use `cp` to copy these files. Never read their contents into context and write them back out.
 
+**Destructive-overwrite caution.** `cp` clobbers existing files silently. Before each copy, check the target with `test -f <path>` — if it exists with non-default content, ask the user before overwriting (`cp -i` will prompt) or back the file up first (`cp <path> <path>.bak`). The audit step (5) is read-only by design; the modification window is steps 2–4 only.
+
 ```bash
 # Copy from the skill's assets directory — use cp, do NOT read+write
 SKILL_ASSETS="{SKILL_DIR}/assets"
-cp "$SKILL_ASSETS/LICENSE-MIT" LICENSE
-cp "$SKILL_ASSETS/CODE_OF_CONDUCT.md" CODE_OF_CONDUCT.md
-cp "$SKILL_ASSETS/SECURITY.md" SECURITY.md
+for f in LICENSE-MIT:LICENSE CODE_OF_CONDUCT.md:CODE_OF_CONDUCT.md SECURITY.md:SECURITY.md; do
+  src="${f%%:*}"; dst="${f##*:}"
+  test -f "$dst" && cp "$dst" "$dst.bak"   # backup any existing file
+  cp "$SKILL_ASSETS/$src" "$dst"
+done
 ```
 
 After copying, only use `sed` to replace placeholders (e.g., `[INSERT CONTACT METHOD]`, `[INSERT EMAIL]`) with project-specific values. Do not rewrite the full file.
+
+For history rewrites (`git filter-repo` in Step 5 / Section 2): always run with `--dry-run` first, confirm the diff with the user, and require an explicit `git push --force-with-lease` rather than `--force`. Never rewrite history without user confirmation.
 
 ### 3. Create GitHub Templates
 
@@ -158,66 +176,14 @@ Each audit agent should:
 
 #### Open Source Project Checklist
 
-**1. License**
-- [ ] Choose a standard license (MIT, Apache 2.0, or GPLv3 recommended)
-- [ ] Add `LICENSE` file in root (exact license text, no modifications)
-- [ ] License is detected by GitHub (shows in repo header) — verify with `gh repo view --json licenseInfo`
+The full checklist (8 sections + bonus items + GitHub Community Standards validation pointer) lives in `references/checklist.md` to keep SKILL.md within the agent's context budget. Each audit sub-agent reads only its assigned section from that file.
 
-**2. Codebase Cleanup**
-- [ ] Remove all secrets, keys, passwords, `.env` examples (use `.env.example`)
-- [ ] Proper `.gitignore` (language-specific, ignore build artifacts)
-- [ ] Consistent code style (linter + formatter run)
-- [ ] No unnecessary files (build folders, caches, IDE files)
-- [ ] Sensitive history cleaned if needed (`git filter-repo`)
+```bash
+# Copy the drop-in checklist into the target repo so maintainers can track progress
+cp "$SKILL_ASSETS/OSS_READINESS_CHECKLIST.md" docs/OSS_READINESS_CHECKLIST.md
+```
 
-**3. Repository Setup**
-- [ ] Clear, descriptive repo name
-- [ ] One-sentence description
-- [ ] Relevant topics/tags added — verify with `gh repo view --json repositoryTopics`
-- [ ] Repository is **Public**
-- [ ] Issues, Discussions, and Projects enabled
-
-**4. Essential Documentation**
-- [ ] `README.md` — well-structured with: title + tagline, badges, features, install & usage examples, screenshot/GIF, contribution section, license & acknowledgments
-- [ ] `CONTRIBUTING.md` — setup, coding standards, PR process
-- [ ] `CODE_OF_CONDUCT.md` (Contributor Covenant recommended)
-- [ ] `SECURITY.md` — vulnerability reporting instructions
-- [ ] Issue & PR templates (`.github/ISSUE_TEMPLATE/` and `PULL_REQUEST_TEMPLATE.md`)
-
-**5. Testing & Automation**
-- [ ] Unit/integration tests exist and pass
-- [ ] CI/CD pipeline (GitHub Actions recommended): lint + test on push/PR, build verification
-- [ ] Dependabot enabled for dependency updates (`.github/dependabot.yml`)
-- [ ] Code coverage reporting (optional but strong signal)
-
-**6. GitHub Settings & Policies**
-- [ ] Default branch = `main` — `gh repo view --json defaultBranchRef`
-- [ ] Branch protection on `main` (require PR review + status checks) — `gh api repos/{owner}/{repo}/branches/main/protection`
-- [ ] Community profile is "Healthy" (license + CoC + templates)
-- [ ] Clear issue labels (`good first issue`, `bug`, `enhancement`, etc.)
-- [ ] Repository topics and description optimized for discovery
-
-**7. Packaging & Installation**
-- [ ] Easy install command in README (e.g. `pip install .`, `npm install`)
-- [ ] Proper package metadata (`pyproject.toml`, `package.json`, `Cargo.toml`, etc.)
-- [ ] Published to package registry (PyPI, npm, crates.io) — if applicable
-
-**8. Final Polish & Release**
-- [ ] CHANGELOG.md or GitHub Releases with clear versioning
-- [ ] Roadmap or future plans visible
-- [ ] No broken links or outdated info
-- [ ] At least one other maintainer (optional)
-- [ ] First issues welcoming to new contributors (`good first issue` label populated)
-
-**Bonus "Great" Items**
-- [ ] Conventional commits
-- [ ] Architecture diagram or demo GIF in README
-- [ ] Pre-commit hooks (`.pre-commit-config.yaml`)
-- [ ] Funding file (`.github/FUNDING.yml`)
-
-#### Quick Validation
-
-Direct the maintainer to: **GitHub → Insights → Community Standards** tab. Aim for all green checks.
+See `references/checklist.md` for every audit item, the `gh` command that verifies it, and the bonus "Great" items list.
 
 ### 6. Present Final Status Report
 
@@ -251,6 +217,56 @@ Then list:
 - Adapt to project's actual tech stack
 - Include working examples from the actual codebase
 - Audit before fixing: run Step 5 read-only first, then offer to fix
+
+## Acceptance Criteria
+
+The skill run is complete when **all** of the following are verifiable:
+
+- A feature branch exists and is checked out (or the user explicitly confirmed working on `main`)
+- `LICENSE`, `CODE_OF_CONDUCT.md`, `SECURITY.md` exist at the repo root and are byte-identical to the asset templates except for `sed`-replaced placeholders
+- `README.md` and `CONTRIBUTING.md` exist and contain every required section listed in Step 2
+- `.github/ISSUE_TEMPLATE/bug_report.md`, `.github/ISSUE_TEMPLATE/feature_request.md`, and a `PULL_REQUEST_TEMPLATE.md` (root or `.github/`) exist
+- `docs/OSS_READINESS_CHECKLIST.md` is present in the target repo
+- The audit step (5) was run **read-only** — no files were modified during audit; modifications happen only in steps 1–4
+- The Step Completion Report (step 6) emits one line per section with a `done/total` count and a final `PASS | FAIL | PARTIAL` verdict
+- No file content sourced from `assets/CODE_OF_CONDUCT.md` or `assets/SECURITY.md` was read into context (only `cp` + `sed` were used) to avoid content filtering on harassment/disclosure language
+
+## Expected Output
+
+The Step Completion Report at the end of the run must match this shape exactly (counts vary per repo):
+
+```
+◆ OSS Readiness (step 6 of 6 — my-cool-project)
+··································································
+  Section 1 License:                √ 3/3
+  Section 2 Codebase Cleanup:       √ 4/5
+  Section 3 Repository Setup:       √ 5/5
+  Section 4 Essential Docs:         √ 5/5
+  Section 5 Testing & Automation:   × 2/4
+  Section 6 GitHub Settings:        √ 4/5
+  Section 7 Packaging:              √ 3/3
+  Section 8 Final Polish:           × 2/5
+  Bonus items:                      — 1/4
+  ____________________________
+  Result:                           PARTIAL
+```
+
+Followed by:
+
+- **Files created/updated** — each path listed with one line of context
+- **Items still requiring manual action** — each with the precise remediation step (e.g., "Enable Dependabot: commit `.github/dependabot.yml` (template available at <url>)")
+- **Recommended next commands** — `gh` calls the maintainer can run themselves (e.g., `gh repo edit --add-topic open-source,documentation`)
+
+## Edge Cases
+
+- **Existing files preserved**: if a `LICENSE`, `README.md`, or other root file already exists with non-default content, the skill must enhance, not overwrite. Diff the current file against the asset template; only add missing sections. Ask the user before any destructive replacement.
+- **Closed-source / private repo**: when the target repo is private and the user did not explicitly say "make this open source", warn and ask before proceeding — Section 3's "Public" check will always fail, which is expected.
+- **Marketing-only repos with no source code**: not in scope. Refuse and route to a docs-site skill.
+- **Non-MIT license already chosen**: do not overwrite. Detect existing `LICENSE` headers (Apache 2.0, GPLv3, etc.) and skip the LICENSE copy step; record `done` against Section 1 with the existing license name.
+- **Monorepo / multi-package repos**: ask the user which package(s) to target — running the skill at the monorepo root vs. inside a sub-package gives different results. Default to the directory the user invoked from.
+- **Asset content filtering**: if any agent attempts to read `CODE_OF_CONDUCT.md` or `SECURITY.md` content into context (vs. `cp`-ing it), the run must abort that sub-task with a clear error and re-issue the copy as a shell command.
+- **`gh` not installed**: Sections 3 and 6 emit `n/a — gh CLI not available` for each gh-dependent item; rest of audit proceeds.
+- **Dirty working tree at start**: stop and ask before any edit — never auto-stash without confirmation.
 
 ## Assets
 
