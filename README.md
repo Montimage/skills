@@ -2,253 +2,205 @@
   <picture>
     <source media="(prefers-color-scheme: dark)" srcset="assets/logo/logo-white.svg">
     <source media="(prefers-color-scheme: light)" srcset="assets/logo/logo-black.svg">
-    <img src="assets/logo/logo-black.svg" alt="Montimage Skills" width="400">
+    <img src="assets/logo/logo-black.svg" alt="Montimage Skills" width="320">
   </picture>
 </p>
 
 <p align="center">
-  <a href="https://github.com/Montimage/skills/releases/tag/v1.1.0"><img src="https://img.shields.io/github/v/release/Montimage/skills?color=E5A630&label=Release" alt="Release"></a>
   <a href="LICENSE"><img src="https://img.shields.io/badge/License-Apache%202.0-blue.svg" alt="License"></a>
-  <a href="#the-skills"><img src="https://img.shields.io/badge/Skills-13-green.svg" alt="Skills"></a>
+  <a href="#catalog"><img src="https://img.shields.io/badge/Skills-9-green.svg" alt="Skills"></a>
   <a href="https://github.com/Montimage/skills/stargazers"><img src="https://img.shields.io/github/stars/Montimage/skills?style=flat&color=yellow" alt="GitHub Stars"></a>
 </p>
 
-<h1 align="center">Turn Your AI Agent Into a Senior Engineer</h1>
+# Procedural skills your AI agent loads on demand
 
-<p align="center">
-13 plug-and-play skills that give Claude Code, Codex, and OpenClaw the domain expertise<br>to review code, ship releases, harden security, and optimize infrastructure — without you writing the prompts.
-</p>
-
-<p align="center">
-  <a href="#get-started-in-30-seconds"><b>Get Started in 30 Seconds &rarr;</b></a>
-</p>
-
----
-
-## Your AI Agent Is Smart — But It Doesn't Know Your Workflow
-
-You paste a task into Claude Code. It gives you a decent answer. But it doesn't know *how* your team reviews code, *what* your CI pipeline needs, or *which* tests are actually missing. So you end up:
-
-- **Writing long prompts every time** — explaining the same review criteria, release process, or doc structure over and over
-- **Fixing the AI's output** — generic code reviews miss your conventions, generated docs don't match your stack, CI configs need manual tweaking
-- **Losing time on repetitive setup** — every new project needs the same OSS files, the same pre-commit hooks, the same install scripts
-
-The more specialized the task, the more you're hand-holding the agent instead of shipping.
-
-## Montimage Skills Fixes This in One Command
-
-Each skill is a self-contained package of procedural knowledge — the exact steps, conventions, and scripts that a senior engineer would follow. Your AI agent loads the right skill automatically based on what you ask, then executes a structured workflow instead of improvising.
-
-- **Code reviews that catch real issues** — not just lint warnings, but code smells, security holes, and Pragmatic Programmer violations, graded by severity
-- **CI/CD pipelines that match your stack** — auto-detects your project type and generates pre-commit hooks + GitHub Actions, no YAML wrangling
-- **Test coverage that finds the gaps** — identifies untested branches, error paths, and edge cases, then writes the missing tests
-- **Release notes from your git history** — categorized changelogs pulled from commits, merged PRs, and closed issues
-- **Documentation that makes sense** — analyzes your project and restructures docs into a coherent hierarchy with diagrams
-- **Open-source readiness in minutes** — README, CONTRIBUTING, LICENSE, CODE_OF_CONDUCT, SECURITY, and GitHub templates, all generated to fit your project
-- **Cross-platform install scripts** — environment detection, dependency checks, verification, and rollback — one command to generate
-- **Local LLM optimization** — detects your GPU/RAM/CPU, classifies your hardware tier, and tunes Ollama for peak performance
-- **Skill authoring** — a guided 4-phase process to create your own skills
-- **Security auditing for skills** — scan any skill for prompt injection, credential leaks, and malicious patterns before you install it
-
-## How It Works
-
-1. **Install** — one command adds all 13 skills to your agent
-   ```bash
-   npx skills add https://github.com/Montimage/skills
-   ```
-2. **Ask naturally** — describe what you need in plain English
-   ```
-   > Review my code for smells and quality issues
-   > Make this project open source ready
-   > Generate release notes for the latest version
-   ```
-3. **The right skill activates** — your agent matches your request to the best skill and follows its structured workflow
-4. **Get expert-level output** — severity-graded reports, production-ready configs, structured docs — not generic suggestions
-
-<p align="center">
-  <img src="assets/screenshots/install.png" alt="Installing Montimage Skills" width="600">
-</p>
-
-<p align="center">
-  <a href="#get-started-in-30-seconds"><b>Start Shipping Faster &rarr;</b></a>
-</p>
-
-## The Skills
-
-### Code Quality & Testing
-
-| Skill | What It Does For You |
-|-------|---------------------|
-| **[code-review](skills/code-review/)** | Reviews code for smells, security issues, and Pragmatic Programmer violations — outputs severity-graded reports you can act on immediately |
-| **[test-coverage](skills/test-coverage/)** | Finds untested branches, error paths, and edge cases, then generates the missing tests for your framework |
-
-### DevOps & Releases
-
-| Skill | What It Does For You |
-|-------|---------------------|
-| **[devops-pipeline](skills/devops-pipeline/)** | Auto-detects your stack and generates pre-commit hooks + GitHub Actions CI — no YAML from scratch |
-| **[release-notes](skills/release-notes/)** | Produces categorized changelogs from git history, merged PRs, and closed issues |
-| **[branch-inspector](skills/branch-inspector/)** | Inspects a single branch against main during cleanup — overview of commits, diff, merge status, staleness, then helps you pick delete/archive/PR/keep with an action plan |
-
-### Documentation & Open Source
-
-| Skill | What It Does For You |
-|-------|---------------------|
-| **[docs-generator](skills/docs-generator/)** | Analyzes your project and restructures documentation into a coherent hierarchy with Mermaid diagrams |
-| **[oss-ready](skills/oss-ready/)** | Adds README, CONTRIBUTING, LICENSE, CODE_OF_CONDUCT, SECURITY, and GitHub templates — tailored to your project |
-| **[oss-ready-flow](skills/oss-ready-flow/)** | End-to-end orchestrator for OSS readiness — runs the full audit, applies fixes, and verifies the result in one pass |
-
-### Infrastructure & Optimization
-
-| Skill | What It Does For You |
-|-------|---------------------|
-| **[install-script-generator](skills/install-script-generator/)** | Generates cross-platform install scripts with environment detection, verification, and rollback |
-| **[ollama-optimizer](skills/ollama-optimizer/)** | Detects your hardware (GPU/RAM/CPU), classifies your tier, and optimizes Ollama for maximum inference speed |
-
-### Security
-
-| Skill | What It Does For You |
-|-------|---------------------|
-| **[supply-chain-audit](skills/supply-chain-audit/)** | Audits npm/pip/Docker/GitHub Actions projects for supply chain risks (cooldown, lockfiles, ignore-scripts, SHA pinning, scanning) and applies layered defenses only after approval |
-| **[skill-auditor](skills/skill-auditor/)** | Scans skills for prompt injection, credential leaks, and malicious patterns before you install them |
-
-### Skill Development
-
-| Skill | What It Does For You |
-|-------|---------------------|
-| **[skill-creator](skills/skill-creator/)** | Walks you through a guided 4-phase skill creation: Discovery, Approval, Build, Test & Deliver |
-
-## Get Started in 30 Seconds
-
-Install all 13 skills:
+Nine `SKILL.md` packages for Claude Code, Codex, and any agent that reads
+skill metadata. Each one encodes a structured workflow — what to check, in
+what order, with what guardrails — so you stop re-explaining your process
+every session.
 
 ```bash
 npx skills add https://github.com/Montimage/skills
 ```
 
-Or pick just the ones you need:
+## Why use skills instead of prompts
 
-```bash
-npx skills add https://github.com/Montimage/skills --skill code-review
-npx skills add https://github.com/Montimage/skills --skill oss-ready
-npx skills add https://github.com/Montimage/skills --skill test-coverage
+You keep typing the same instructions: "review this PR but also check SQL
+safety", "set up CI but use pnpm not npm", "make the branch cleanup
+non-destructive". Prompts evaporate. The next session you write them again,
+slightly differently, and your agent improvises.
+
+A skill is the prompt frozen as code. Same trigger, same workflow, same
+checks, every time.
+
+## How it works
+
+```mermaid
+flowchart LR
+    A[You: 'audit supply chain'] --> B{Agent reads<br/>SKILL.md metadata}
+    B -->|description matches| C[Load skill body]
+    C --> D[Run structured workflow]
+    D --> E[Approval gates<br/>before mutating files]
+    E --> F[Output + diff]
 ```
 
-Works with **Claude Code**, **Codex**, **OpenClaw**, and any AI tool that supports skill-based workflows.
+The agent matches your request against each skill's `description` field. The
+chosen skill's body loads on demand, runs its workflow, and stops at human
+approval gates before changing anything.
+
+## Catalog
+
+Find the skill by what you'd type. Every row is a working trigger phrase.
+
+### Shipping and releases
+
+| You say | Skill | Outcome |
+|---|---|---|
+| "review this branch" / "branch cleanup" | [branch-inspector](skills/branch-inspector/) | Per-branch diff/merge/staleness report, then you pick delete/archive/PR/keep |
+| "set up CI" / "add pre-commit hooks" | [devops-pipeline](skills/devops-pipeline/) | Detects stack, generates pre-commit + GitHub Actions, no YAML from scratch |
+| "create an installer" / "install on any OS" | [install-script-generator](skills/install-script-generator/) | One `curl \| sh` script with OS/arch detection, verify, rollback |
+
+### Quality and security
+
+| You say | Skill | Outcome |
+|---|---|---|
+| "audit supply chain" / "harden dependencies" | [supply-chain-audit](skills/supply-chain-audit/) | Detect→audit→plan→apply for npm/pip/Docker/Actions; approval gated |
+| "add more tests" / "find untested code" | [test-coverage](skills/test-coverage/) | Lists untested branches and error paths, then writes the missing tests |
+| "is this skill safe?" / "audit this skill" | [skill-auditor](skills/skill-auditor/) | Scans a third-party skill for prompt injection, creds, shell risks |
+
+### Documentation and open source
+
+| You say | Skill | Outcome |
+|---|---|---|
+| "the README is a mess" / "organize docs" | [docs-generator](skills/docs-generator/) | Restructures scattered docs into a hierarchy with Mermaid diagrams |
+| "make this open source" / "OSS readiness" | [oss-ready](skills/oss-ready/) | Adds README/CONTRIBUTING/LICENSE/CoC/SECURITY + 8-section audit |
+| "full OSS prep" / "open-source this repo" | [oss-ready-flow](skills/oss-ready-flow/) | End-to-end 6-step orchestrator (audit, cleanup, docs, README, publish) |
+
+## Install
+
+Install the whole pack:
+
+```bash
+npx skills add https://github.com/Montimage/skills
+```
+
+Or pick one:
+
+```bash
+npx skills add https://github.com/Montimage/skills --skill supply-chain-audit
+```
+
+Verify in Claude Code:
+
+```bash
+claude --list-skills | grep -E 'branch-inspector|supply-chain'
+```
+
+## Use it
+
+The trigger phrases above are the API. Type them naturally:
+
+```text
+> Audit supply chain on this repo
+> Inspect the branch feature/legacy-payment
+> Make this project OSS-ready
+```
+
+The agent picks the matching skill from `description` metadata and runs it.
+
+## Anatomy of a skill
+
+```
+supply-chain-audit/
+├── SKILL.md          # YAML metadata + workflow instructions
+├── references/       # Loaded on demand (per-ecosystem rules, templates)
+├── scripts/          # Runnable helpers
+├── evals/            # Test prompts + assertions
+└── docs/             # Human-only (README, eval report)
+```
+
+Loading is progressive:
+
+```mermaid
+flowchart TD
+    A[Metadata: name + description<br/>~100 tokens, always loaded] --> B
+    B[SKILL.md body<br/>loaded when skill triggers] --> C
+    C[references/, scripts/<br/>loaded by skill on demand]
+```
+
+Token cost stays low because only the matching skill's body enters context.
 
 ## FAQ
 
-**Is this free?**
-Yes. Montimage Skills is open source under the [Apache 2.0 License](LICENSE) — free for personal and commercial use, forever.
+**Which agents work?** Claude Code, Codex, and any tool that reads `SKILL.md`
+frontmatter. No agent-specific bindings.
 
-**Which AI agents are supported?**
-Claude Code, Codex, OpenClaw, and any agent that reads `SKILL.md` frontmatter for skill discovery. If your tool supports skills, these work.
+**Free for commercial use?** Yes. Apache 2.0.
 
-**Is this actively maintained?**
-Yes. v1.1.0 shipped March 2026 with expanded skill descriptions, security hardening, and repo-sync guardrails across all mutating skills. Check the [changelog](docs/CHANGELOG.md) for details.
+**How do I write my own?** Fork a skill and edit `SKILL.md`. The frontmatter
+schema is documented in [CONTRIBUTING.md](CONTRIBUTING.md).
 
-**Can I use these in production workflows?**
-Absolutely. Each skill follows a structured, repeatable workflow — no random improvisation. Skills like `code-review` and `test-coverage` are designed to integrate into your daily development loop.
+**What if a skill modifies my repo wrong?** Every mutating skill (oss-ready,
+devops-pipeline, supply-chain-audit, etc.) gates writes behind explicit user
+approval and prints a diff before applying.
 
-**How do I create my own skill?**
-Use the `skill-creator` skill. It walks you through a 4-phase process: Discovery, Approval, Build, Test & Deliver. Or follow the [Contributing guide](CONTRIBUTING.md).
-
-**What if I find a security issue in a skill?**
-Run `skill-auditor` on it first — it checks for prompt injection, credential leaks, and unrestricted shell commands. For reporting vulnerabilities in this project, see [SECURITY.md](SECURITY.md).
-
-**How does this compare to writing my own prompts?**
-Skills encode reusable procedural knowledge — the exact steps, checks, and conventions an expert would follow. You write the prompt once (as a skill), and every future invocation gets the same quality. No copy-pasting, no forgetting steps.
-
-## Start Building Better With Your AI Agent
-
-Montimage Skills gives your agent the expertise it's missing — structured workflows, security checks, and production-ready output for the tasks you do every day. Apache 2.0 licensed, free forever, installs in one command.
-
-[**Install All 12 Skills Now &rarr;**](#get-started-in-30-seconds)
-
----
+**Security?** Run `skill-auditor` on any third-party skill before installing.
+For vulnerabilities here, see [SECURITY.md](SECURITY.md).
 
 <details>
-<summary><b>Project Structure</b></summary>
+<summary><b>Project layout</b></summary>
 
 ```
 skills/
-├── skills/                        # All agent skills
-│   ├── branch-inspector/          # Branch cleanup inspection
-│   ├── code-review/               # Code quality reviews
-│   ├── devops-pipeline/           # CI/CD and pre-commit setup
-│   ├── docs-generator/            # Documentation restructuring
-│   ├── install-script-generator/  # Cross-platform installers
-│   ├── ollama-optimizer/          # Local LLM optimization
-│   ├── oss-ready/                 # Open-source readiness
-│   ├── oss-ready-flow/            # OSS readiness orchestrator
-│   ├── release-notes/             # Changelog generation
-│   ├── skill-auditor/             # Security audit for agent skills
-│   ├── skill-creator/             # Skill authoring guide
-│   └── test-coverage/             # Test coverage expansion
-├── assets/                        # Logo and screenshot assets
-├── docs/                          # Project documentation
-│   ├── ARCHITECTURE.md            # System design and decisions
-│   ├── CHANGELOG.md               # Version history
-│   ├── DEPLOYMENT.md              # Publishing and distribution
-│   └── DEVELOPMENT.md             # Local development setup
-├── LICENSE                        # Apache 2.0
-├── CONTRIBUTING.md                # Contribution guidelines
-├── CODE_OF_CONDUCT.md             # Community standards
-└── SECURITY.md                    # Vulnerability reporting
+├── skills/                       # 9 skills, one per directory
+├── assets/                       # Logo and screenshot assets
+├── docs/                         # Project documentation
+│   ├── ARCHITECTURE.md
+│   ├── CHANGELOG.md
+│   └── DEVELOPMENT.md
+├── LICENSE                       # Apache 2.0
+├── CONTRIBUTING.md
+├── CODE_OF_CONDUCT.md
+└── SECURITY.md
 ```
 
 </details>
 
 <details>
-<summary><b>Skill Anatomy</b></summary>
+<summary><b>Skill anatomy and progressive disclosure</b></summary>
 
-Each skill follows a standard structure:
+Each skill ships a `SKILL.md` with YAML frontmatter (`name`, `description`,
+`version`) and a markdown body. The agent reads metadata first; on match it
+loads the body; the body points to `references/` and `scripts/` as needed.
 
-```
-skill-name/
-├── SKILL.md          # Required: metadata + instructions for the AI agent
-├── README.md         # Required: human-readable documentation
-├── scripts/          # Optional: executable code (Python/Bash)
-├── references/       # Optional: domain knowledge, documentation
-└── assets/           # Optional: templates, icons, fonts
-```
+Three levels:
 
-The `SKILL.md` file contains YAML frontmatter (`name`, `version`, `description`) that the AI agent reads to determine when to activate the skill, plus markdown instructions loaded on activation. The `README.md` provides human-readable documentation with highlights, trigger phrases, workflow diagrams, and usage instructions.
+1. **Metadata** — `name` + `description`, always in context, ~100 tokens.
+2. **Body** — `SKILL.md` markdown, loaded on activation, target ≤500 lines.
+3. **Resources** — files under `references/` and `scripts/`, loaded by the
+   skill body when it needs them.
 
-Skills use a three-level progressive disclosure system:
-
-1. **Metadata** (always in context) — `name` + `description` from YAML frontmatter (~100 words)
-2. **Instructions** (on activation) — SKILL.md body loaded when the skill triggers (<5k words)
-3. **Resources** (on demand) — scripts, references, and assets loaded as needed
+This keeps the context window small even with dozens of installed skills.
 
 </details>
 
 <details>
 <summary><b>Contributing</b></summary>
 
-We welcome contributions! See [CONTRIBUTING.md](CONTRIBUTING.md) for full guidelines.
+1. Fork.
+2. `git checkout -b feat/your-skill-name`
+3. Create `skills/your-skill-name/SKILL.md` with valid frontmatter.
+4. Add `evals/evals.json` with 2–3 realistic prompts.
+5. Conventional commits: `feat(your-skill): ...`
+6. Open a PR.
 
-**Quick start:**
-
-1. Fork the repository
-2. Create a feature branch: `git checkout -b feat/your-feature-name`
-3. Follow [Conventional Commits](https://www.conventionalcommits.org/): `feat:`, `fix:`, `docs:`
-4. Test your skill with Claude Code before submitting
-5. Open a Pull Request
-
-**Adding a new skill:**
-
-1. Create `skills/your-skill-name/SKILL.md` with proper YAML frontmatter
-2. Follow the [skill-creator](skills/skill-creator/) guide for best practices
-3. Update the skills table in this README
+See [CONTRIBUTING.md](CONTRIBUTING.md) for the full guide.
 
 </details>
 
 <details>
 <summary><b>License</b></summary>
 
-This project is licensed under the Apache License 2.0 — see the [LICENSE](LICENSE) file for details.
-
-Copyright [Montimage](https://www.montimage.com/)
+Apache 2.0. Copyright [Montimage](https://www.montimage.com/).
 
 </details>
