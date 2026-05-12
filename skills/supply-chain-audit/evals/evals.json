@@ -1,0 +1,44 @@
+{
+  "skill_name": "supply-chain-audit",
+  "evals": [
+    {
+      "name": "npm_audit_stops_at_phase_2",
+      "prompt": "Audit this Node project for supply chain attack risks. The repo has package.json, package-lock.json, and a .github/workflows/ci.yml that runs `npm install && npm test`. There is no .npmrc.",
+      "assertions": [
+        "Skill is triggered (supply-chain-audit runs).",
+        "Output contains a Phase 1 / Detect block with ecosystems detected (npm and github-actions).",
+        "Output contains a Phase 2 audit report with an Executive summary table (Posture, Critical, High, Medium, Low columns).",
+        "Findings include a Critical entry for missing min-release-age and a Critical entry for ignore-scripts not being set.",
+        "Findings include a High entry for the CI step using `npm install` instead of `npm ci`.",
+        "Each finding cites evidence (the actual missing file or the workflow line), not just generic best-practice text.",
+        "Skill stops at Phase 2 and asks whether to proceed to a plan — does NOT auto-emit Phase 3 or apply edits.",
+        "Skill does NOT modify any file before user approval."
+      ]
+    },
+    {
+      "name": "subset_approval_applies_only_chosen_changes",
+      "prompt": "Audit my project and after the report, if you propose a plan, only apply the npm changes — skip anything about Docker or GitHub Actions. The repo has package.json, Dockerfile (uses `FROM node:22`), and .github/workflows/release.yml (uses `actions/checkout@v4`).",
+      "assertions": [
+        "Phase 1 detects npm, docker, and github-actions.",
+        "Phase 2 report covers all three ecosystems with separate sections.",
+        "Phase 3 plan is emitted only after Phase 2 — not interleaved.",
+        "Phase 3 plan groups changes by ecosystem and assigns each a stable ID (npm-1, docker-1, gha-1, etc.).",
+        "Every change in the plan has a Diff block (unified diff format), an Impact statement naming a downside, and a Reversibility line.",
+        "Skill recognizes the subset approval ('only npm') and applies ONLY npm-prefixed changes in Phase 4.",
+        "Skill does NOT modify the Dockerfile or workflow YAML.",
+        "Phase 4 completion report lists the actual files modified and confirms commit is left to the user."
+      ]
+    },
+    {
+      "name": "no_ecosystem_detected_exits_cleanly",
+      "prompt": "Run a supply chain audit on this directory.",
+      "files": [],
+      "assertions": [
+        "Skill detects that no supported ecosystem manifest exists (no package.json, no pyproject.toml/requirements.txt, no Dockerfile, no .github/workflows).",
+        "Skill exits cleanly with a short message that nothing is auditable.",
+        "Skill does NOT fabricate findings or invent files that aren't present.",
+        "Skill does NOT proceed to Phase 2, 3, or 4."
+      ]
+    }
+  ]
+}

@@ -25,6 +25,9 @@ env/
 # Packaged skills
 *.skill
 
+# Eval workspaces (per-skill local benchmarking output)
+skills/*-workspace/
+
 # Environment
 .env
 .env.local
