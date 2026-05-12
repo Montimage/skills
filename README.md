@@ -9,14 +9,14 @@
 <p align="center">
   <a href="https://github.com/Montimage/skills/releases/tag/v1.1.0"><img src="https://img.shields.io/github/v/release/Montimage/skills?color=E5A630&label=Release" alt="Release"></a>
   <a href="LICENSE"><img src="https://img.shields.io/badge/License-Apache%202.0-blue.svg" alt="License"></a>
-  <a href="#the-skills"><img src="https://img.shields.io/badge/Skills-12-green.svg" alt="Skills"></a>
+  <a href="#the-skills"><img src="https://img.shields.io/badge/Skills-13-green.svg" alt="Skills"></a>
   <a href="https://github.com/Montimage/skills/stargazers"><img src="https://img.shields.io/github/stars/Montimage/skills?style=flat&color=yellow" alt="GitHub Stars"></a>
 </p>
 
 <h1 align="center">Turn Your AI Agent Into a Senior Engineer</h1>
 
 <p align="center">
-12 plug-and-play skills that give Claude Code, Codex, and OpenClaw the domain expertise<br>to review code, ship releases, harden security, and optimize infrastructure — without you writing the prompts.
+13 plug-and-play skills that give Claude Code, Codex, and OpenClaw the domain expertise<br>to review code, ship releases, harden security, and optimize infrastructure — without you writing the prompts.
 </p>
 
 <p align="center">
@@ -52,7 +52,7 @@ Each skill is a self-contained package of procedural knowledge — the exact ste
 
 ## How It Works
 
-1. **Install** — one command adds all 12 skills to your agent
+1. **Install** — one command adds all 13 skills to your agent
    ```bash
    npx skills add https://github.com/Montimage/skills
    ```
@@ -105,16 +105,22 @@ Each skill is a self-contained package of procedural knowledge — the exact ste
 | **[install-script-generator](skills/install-script-generator/)** | Generates cross-platform install scripts with environment detection, verification, and rollback |
 | **[ollama-optimizer](skills/ollama-optimizer/)** | Detects your hardware (GPU/RAM/CPU), classifies your tier, and optimizes Ollama for maximum inference speed |
 
+### Security
+
+| Skill | What It Does For You |
+|-------|---------------------|
+| **[supply-chain-audit](skills/supply-chain-audit/)** | Audits npm/pip/Docker/GitHub Actions projects for supply chain risks (cooldown, lockfiles, ignore-scripts, SHA pinning, scanning) and applies layered defenses only after approval |
+| **[skill-auditor](skills/skill-auditor/)** | Scans skills for prompt injection, credential leaks, and malicious patterns before you install them |
+
 ### Skill Development
 
 | Skill | What It Does For You |
 |-------|---------------------|
 | **[skill-creator](skills/skill-creator/)** | Walks you through a guided 4-phase skill creation: Discovery, Approval, Build, Test & Deliver |
-| **[skill-auditor](skills/skill-auditor/)** | Scans skills for prompt injection, credential leaks, and malicious patterns before you install them |
 
 ## Get Started in 30 Seconds
 
-Install all 12 skills:
+Install all 13 skills:
 
 ```bash
 npx skills add https://github.com/Montimage/skills
