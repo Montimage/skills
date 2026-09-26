@@ -22,9 +22,22 @@ if [ -z "$BORROWED_PATH" ] || [ ! -d "$BORROWED_PATH/assets" ] ||
   echo "Install/update oss-ready with asm before copying templates" >&2
   exit 1
 fi
-# The approved destination may not exist in a fresh target repo.
-mkdir -p docs
-cp "$BORROWED_PATH/assets/OSS_READINESS_CHECKLIST.md" docs/OSS_READINESS_CHECKLIST.md
+# Preserve checklist progress on reruns; replacing it requires explicit approval.
+checklist=docs/OSS_READINESS_CHECKLIST.md
+if [ -d "$checklist" ]; then
+  echo "Cannot copy checklist: $checklist is a directory" >&2
+  exit 1
+elif [ -e "$checklist" ] || [ -L "$checklist" ]; then
+  echo "Existing $checklist preserved; replacement requires explicit approval" >&2
+else
+  # The approved destination may not exist in a fresh target repo.
+  mkdir -p docs
+  cp -n "$BORROWED_PATH/assets/OSS_READINESS_CHECKLIST.md" "$checklist"
+  if [ -d "$checklist" ] || [ -L "$checklist" ] || [ ! -f "$checklist" ]; then
+    echo "Checklist copy failed: $checklist is not a regular file" >&2
+    exit 1
+  fi
+fi
 # Copy any other approved templates from "$BORROWED_PATH/assets/" here.
 ```
 
