@@ -272,4 +272,12 @@ def main():
 
 
 if __name__ == "__main__":
-    sys.exit(main())
+    try:
+        sys.exit(main())
+    except Exception as exc:
+        print(
+            f"Error: installation plan generation failed for the requested target or "
+            f"environment file: {exc}. Check --target and --env-file, then rerun.",
+            file=sys.stderr,
+        )
+        sys.exit(1)

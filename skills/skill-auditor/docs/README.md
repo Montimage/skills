@@ -1,6 +1,15 @@
+<!--
+  DO NOT READ THIS FILE — This README.md is for human catalog browsing only.
+  It ships inside the .skill package but is NEVER auto-loaded into agent context.
+  The runtime loader only reads SKILL.md + references/ + scripts/ + agents/ when the skill triggers.
+  If you're an AI agent, read the SKILL.md file instead for skill instructions.
+-->
+
 # Skill Auditor
 
 > Analyze agent skills for security risks, malicious patterns, and potential dangers before installation.
+
+**Author:** Montimage
 
 ## Highlights
 
@@ -46,5 +55,5 @@ Generates `SKILL_AUDIT.md` with skill overview, risk summary table (9 categories
 
 | Path | Description |
 |---|---|
-| `scripts/scan_skill.py` | Automated pattern scanner |
-| `references/security-checklist.md` | Full risk taxonomy and analysis guidelines |
+| [`../scripts/scan_skill.py`](../scripts/scan_skill.py) | Automated pattern scanner |
+| [`../references/security-checklist.md`](../references/security-checklist.md) | Full risk taxonomy and analysis guidelines |

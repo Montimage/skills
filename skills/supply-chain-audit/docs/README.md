@@ -1,6 +1,15 @@
+<!--
+  DO NOT READ THIS FILE — This README.md is for human catalog browsing only.
+  It ships inside the .skill package but is NEVER auto-loaded into agent context.
+  The runtime loader only reads SKILL.md + references/ + scripts/ + agents/ when the skill triggers.
+  If you're an AI agent, read the SKILL.md file instead for skill instructions.
+-->
+
 # Supply Chain Audit
 
-> **Note for AI agents:** This README is for humans. If you're an AI agent looking for instructions, read `SKILL.md` in the parent directory instead.
+> Audit dependency, container, and CI supply-chain controls before applying approved hardening changes.
+
+**Author:** Montimage
 
 A skill that audits a project's defenses against supply-chain attacks — compromised npm/PyPI packages, poisoned transitive dependencies, malicious post-install scripts, untrusted container base images, hijacked GitHub Actions — and applies layered fixes only after you approve them.
 
@@ -83,14 +92,14 @@ You decide whether the trade-off is worth it.
 
 The skill was benchmarked against an unguided baseline on three eval cases (npm-only audit with phase gate, multi-ecosystem subset apply, empty-repo negative control). With-skill pass-rate **1.00** vs baseline **0.58**, at a cost of ~2× tokens and ~2.5× wall time.
 
-See [`eval-report.md`](eval-report.md) for the full methodology, per-eval breakdown, honest caveats, and reproduction commands.
+See `SKILL.md` for the workflow and `../references/` for the ecosystem checklists, report template, change plan, and scoring rules.
 
 ## Reference index
 
-The skill is internally documented in `SKILL.md` plus reference files under `references/`:
+The skill is internally documented in `SKILL.md` plus reference files under `../references/`:
 
-- `references/npm.md`, `python.md`, `docker.md`, `github-actions.md` — per-ecosystem checklists and remediation snippets.
-- `references/audit-report.md` — Phase 2 template.
-- `references/change-plan.md` — Phase 3 template.
-- `references/scoring.md` — posture rating rubric.
-- `scripts/detect_ecosystems.sh` — ecosystem detection helper.
+- [`../references/npm.md`](../references/npm.md), [`../references/python.md`](../references/python.md), [`../references/docker.md`](../references/docker.md), [`../references/github-actions.md`](../references/github-actions.md) — per-ecosystem checklists and remediation snippets.
+- [`../references/audit-report.md`](../references/audit-report.md) — Phase 2 template.
+- [`../references/change-plan.md`](../references/change-plan.md) — Phase 3 template.
+- [`../references/scoring.md`](../references/scoring.md) — posture rating rubric.
+- [`../scripts/detect_ecosystems.sh`](../scripts/detect_ecosystems.sh) — ecosystem detection helper.

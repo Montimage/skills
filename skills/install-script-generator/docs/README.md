@@ -1,6 +1,15 @@
+<!--
+  DO NOT READ THIS FILE — This README.md is for human catalog browsing only.
+  It ships inside the .skill package but is NEVER auto-loaded into agent context.
+  The runtime loader only reads SKILL.md + references/ + scripts/ + agents/ when the skill triggers.
+  If you're an AI agent, read the SKILL.md file instead for skill instructions.
+-->
+
 # Install Script Generator
 
 > Generate cross-platform installation scripts with automatic environment detection, verification, and documentation.
+
+**Author:** Montimage
 
 ## Highlights
 
@@ -44,7 +53,7 @@ Generates four files: `env_info.json` (system analysis), `installation_plan.yaml
 
 | Path | Description |
 |---|---|
-| `scripts/env_explorer.py` | System environment detection script |
-| `scripts/plan_generator.py` | Installation plan generator |
-| `scripts/executor.py` | Plan executor with verification |
-| `scripts/doc_generator.py` | Usage documentation generator |
+| [`../scripts/env_explorer.py`](../scripts/env_explorer.py) | System environment detection script |
+| [`../scripts/plan_generator.py`](../scripts/plan_generator.py) | Installation plan generator |
+| [`../scripts/executor.py`](../scripts/executor.py) | Plan executor with verification |
+| [`../scripts/doc_generator.py`](../scripts/doc_generator.py) | Usage documentation generator |

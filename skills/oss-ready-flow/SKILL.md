@@ -1,10 +1,10 @@
 ---
 name: oss-ready-flow
-description: "Prepare a repository for end-to-end OSS release across 6 sub-agent steps: audit, branch cleanup, docs, README, publications, optional Pages. Use for 'full OSS prep', 'OSS release flow', 'open-source this repo'. Skip for audit-only (use oss-ready) or single-doc edits."
+description: "Prepare an end-to-end OSS release flow covering audit, branches, docs, README, publications, and optional Pages. Use when coordinating full OSS prep. Don't use for audit-only checks, single-doc edits, or marketing sites."
+license: Apache-2.0
 effort: high
-license: MIT
 metadata:
-  version: 1.4.0
+  version: 1.5.4
   author: Montimage
 ---
 
@@ -18,13 +18,27 @@ Destructive actions (branch deletes) are **plan-only by default with per-branch 
 
 ## Prerequisites
 
-- `git` available on PATH; the target is a git repo with at least one commit
-- `gh` CLI authenticated (`gh auth status`) for any step that touches GitHub-side state (audit section 6, remote branch deletion, Pages enablement). If missing, those checks degrade to local-only with an explicit `n/a` reason in the report
-- The `oss-ready` skill installed (this skill calls into its audit logic and reuses its asset templates)
-- Write access to the target repo's working tree
-- A clean working tree, or willingness to stash uncommitted changes during Repo Sync
+- `git` and a target repo with at least one commit.
+- Authenticated `gh` for GitHub-side checks; if unavailable, mark those checks `n/a` in the report.
+- Installed `oss-ready`, write access, and a clean or safely stashed working tree.
 
-If any prerequisite is missing, stop and tell the user — do not silently degrade.
+If any prerequisite is missing, stop and tell the user; do not silently degrade.
+
+## Dependency Preflight (mandatory)
+
+This skill invokes `oss-ready`. Verify it is installed before the first step that changes anything:
+
+```bash
+asm list -p claude --json | grep -q '"oss-ready"' || {
+  echo "Missing required skill: oss-ready" >&2
+  echo "Install it:      asm install oss-ready -p claude --yes" >&2
+  echo "No asm yet:      npm install -g agent-skill-manager" >&2
+  echo "Verify:          asm list -p claude --json | grep 'oss-ready'" >&2
+  exit 1
+}
+```
+
+If the check fails, stop and print the commands above; do not continue with a partial run.
 
 ## Safety Model
 
@@ -52,11 +66,9 @@ If the working tree is dirty, stash first, sync, then pop. If `origin` is missin
 
 ## Ground Rules
 
-- **Always base work on the existing codebase.** Sub-agents must inspect actual files, git history, and config before producing any report or edit. No hallucinated stacks, branches, or features.
-- **Always ask the user when information is ambiguous.** If a sub-agent can't determine intent (license, branch fate, publication list), surface a question via `AskUserQuestion`.
-- **Never delete or force-push without per-item approval.** This applies to branches, history rewrites, and any rebase that drops commits.
-- **No commits without an explicit user request.** The skill writes files and stages diffs; the user runs the commit.
-- **Reports are append-only within a session.** Re-running a step creates `<step>.<run-N>.md`; prior reports are not overwritten.
+- Inspect real files/config; ask when license, branch fate, or publication intent is ambiguous.
+- Require per-item approval before deleting, rewriting history, or force-pushing; never commit without an explicit request.
+- Keep reports append-only; reruns create `<step>.<run-N>.md`.
 
 ## Workflow
 
@@ -134,9 +146,7 @@ After all steps (or after the user stops), emit the Final Summary block (templat
 
 ## Sub-agent Dispatch Pattern
 
-All sub-agents are spawned with `subagent_type: general-purpose` (or `Explore` for purely read-only audit-style passes) and a self-contained brief from `references/sub-agent-briefs.md`. Each brief specifies: what to read, what to write (exact paths under `.oss-ready/`), what NOT to modify, and what to return (≤ 200 words).
-
-The main agent never duplicates the sub-agent's work. After receiving a summary, the main agent surfaces it to the user, asks the action-point question, and waits.
+Dispatch each worker as `general-purpose` (or `Explore` for read-only work) using `references/sub-agent-briefs.md`. Pass its exact `.oss-ready/` output path and prohibited scope; require a summary of 200 words or fewer. The main agent reviews each result, surfaces it to the user, and waits at every action point.
 
 ## Restartability
 
@@ -166,11 +176,8 @@ See `references/edge-cases.md` for the full list. Key entries: no git remote, pa
 
 ## Assets
 
-This skill ships no assets of its own. Templates come from the `oss-ready` skill (`/Users/montimage/dev-montimage/skills/skills/oss-ready/assets/`) and from `docs-generator` where applicable.
+Resolve the installed `oss-ready` directory, verify its `assets/`, and copy with its absolute path; never assume a relative sibling path. Read `references/assets-resolution.md` for the required preflight, install instructions, and copy command.
 
 ## References
 
-- `references/sub-agent-briefs.md` — verbatim briefs for every sub-agent
-- `references/expected-output.md` — directory layout and report templates
-- `references/edge-cases.md` — recovery and refusal patterns
-- `docs/README.md` — human-facing overview
+Read `references/sub-agent-briefs.md` for worker contracts, `references/expected-output.md` for report layouts, and `references/edge-cases.md` for recovery. `docs/README.md` is human-facing only.

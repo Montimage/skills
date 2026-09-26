@@ -322,14 +322,33 @@ def scan_skill(skill_path: str) -> dict:
 
 def main():
     if len(sys.argv) != 2:
-        print("Usage: scan_skill.py <skill-path>")
-        print("\nScans a skill directory for security risk indicators.")
-        print("Outputs JSON to stdout.")
-        sys.exit(1)
+        print(
+            "Error: expected exactly one skill directory path. "
+            "Usage: scan_skill.py <skill-path>",
+            file=sys.stderr,
+        )
+        return 1
 
     result = scan_skill(sys.argv[1])
+    if "error" in result:
+        print(
+            f"Error: cannot scan {sys.argv[1]}: {result['error']}. "
+            "Provide a directory containing SKILL.md and rerun.",
+            file=sys.stderr,
+        )
+        return 1
+
     print(json.dumps(result, indent=2))
+    return 0
 
 
 if __name__ == "__main__":
-    main()
+    try:
+        sys.exit(main())
+    except Exception as exc:
+        print(
+            f"Error: skill scan failed for {sys.argv[1] if len(sys.argv) > 1 else '<missing path>'}: "
+            f"{exc}. Check the path and permissions, then rerun.",
+            file=sys.stderr,
+        )
+        sys.exit(1)

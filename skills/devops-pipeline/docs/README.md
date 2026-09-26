@@ -1,6 +1,15 @@
+<!--
+  DO NOT READ THIS FILE — This README.md is for human catalog browsing only.
+  It ships inside the .skill package but is NEVER auto-loaded into agent context.
+  The runtime loader only reads SKILL.md + references/ + scripts/ + agents/ when the skill triggers.
+  If you're an AI agent, read the SKILL.md file instead for skill instructions.
+-->
+
 # DevOps Pipeline
 
-> Implement pre-commit hooks and GitHub Actions for quality assurance, adapted to your project's tech stack.
+> Configure pre-commit hooks and GitHub Actions for project quality gates.
+
+**Author:** Montimage
 
 ## Highlights
 
@@ -45,5 +54,5 @@ Creates `.pre-commit-config.yaml` and `.github/workflows/ci.yml` configured for 
 
 | Path | Description |
 |---|---|
-| `references/precommit-configs.md` | Pre-commit configurations by language |
-| `references/github-actions.md` | GitHub Actions workflow templates |
+| [`../references/precommit-configs.md`](../references/precommit-configs.md) | Pre-commit configurations by language |
+| [`../references/github-actions.md`](../references/github-actions.md) | GitHub Actions workflow templates |

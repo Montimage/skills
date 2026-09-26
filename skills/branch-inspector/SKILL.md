@@ -1,9 +1,10 @@
 ---
 name: branch-inspector
-description: "Inspect one git branch vs main: overview of commits, diff, merge/PR status, staleness; user picks delete/archive/PR/keep; emit action plan. Use for 'review this branch', 'branch cleanup'. Skip for repo audits, multi-branch sweeps, PR code review."
+description: "Inspect a git branch against main, summarize its commits, diff, merge status, and staleness, then emit a cleanup action plan. Use when reviewing or cleaning up one branch. Don't use for repo audits, multi-branch sweeps, or PR code review."
+license: Apache-2.0
 effort: high
 metadata:
-  version: 1.1.2
+  version: 1.1.5
   author: Montimage
 ---
 

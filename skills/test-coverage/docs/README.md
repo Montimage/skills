@@ -1,6 +1,15 @@
+<!--
+  DO NOT READ THIS FILE — This README.md is for human catalog browsing only.
+  It ships inside the .skill package but is NEVER auto-loaded into agent context.
+  The runtime loader only reads SKILL.md + references/ + scripts/ + agents/ when the skill triggers.
+  If you're an AI agent, read the SKILL.md file instead for skill instructions.
+-->
+
 # Test Coverage
 
-> Expand unit test coverage by targeting untested branches, edge cases, and error paths.
+> Improve test coverage by targeting untested branches, edge cases, and error paths.
+
+**Author:** Montimage
 
 ## Highlights
 

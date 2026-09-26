@@ -1,6 +1,15 @@
+<!--
+  DO NOT READ THIS FILE — This README.md is for human catalog browsing only.
+  It ships inside the .skill package but is NEVER auto-loaded into agent context.
+  The runtime loader only reads SKILL.md + references/ + scripts/ + agents/ when the skill triggers.
+  If you're an AI agent, read the SKILL.md file instead for skill instructions.
+-->
+
 # Documentation Generator
 
-> Restructure project documentation for clarity and accessibility with appropriate hierarchy for the project type.
+> Generate project documentation structure and practical guides for the project type.
+
+**Author:** Montimage
 
 ## Highlights
 

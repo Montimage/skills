@@ -1,15 +1,26 @@
 ---
 name: docs-generator
+description: "Generate project documentation structure and practical guides. Use when organizing READMEs or adding API docs. Don't use for code changes, CI setup, or branch management."
+license: Apache-2.0
 effort: medium
-description: Restructure project documentation for clarity and accessibility. Use when users ask to "organize docs", "generate documentation", "improve doc structure", "restructure README", "write docs", "create README", "document my code", "add API docs", "document this project", "help with documentation", or need to reorganize scattered documentation into a coherent structure. Analyzes project type and creates appropriate documentation hierarchy. Trigger this skill whenever the user needs documentation created, reorganized, or improved — even if they just say something like "this project needs docs" or "the README is a mess".
 metadata:
-  version: 1.3.0
-  creator: Montimage
+  version: 1.4.1
+  author: Montimage
 ---
 
 # Documentation Generator
 
 Restructure project documentation for clarity and accessibility.
+
+## When to Use
+
+Use this skill when the user requests a clearer README, organized project docs, API references, architecture diagrams, or contributor guidance. Select only the documentation files relevant to the detected project type.
+
+## Prerequisites
+
+- Work in a git repository with a configured `origin` remote and a clean or safely stashed working tree.
+- Identify the project's entry point, package manifest, test command, and existing documentation before drafting.
+- Have write access to the target documentation paths; do not assume generated docs may replace source-authored content.
 
 ## Repo Sync Before Edits (mandatory)
 
@@ -92,16 +103,45 @@ Example:
         D --> E["Database"]
     ```
 
-### 4. Quality Checklist
+## Example
+
+Input: `Document this CLI for new users.`
+
+Expected output: a concise root README with a working quickstart, links to relevant `docs/` pages, one Mermaid architecture or data-flow diagram where useful, and no invented commands or components.
+
+## Safety and Failure Handling
+
+- Preserve existing documentation by editing in place and reviewing `git diff` before replacing content.
+- Before moving, replacing, or deleting a documentation file, show the planned paths and get explicit user confirmation; use a backup or git history when available.
+- Never commit or push generated documentation automatically.
+- If the project type or source behavior is unclear, stop and ask for clarification rather than inventing API, deployment, or database details.
+- If a link or example check fails, report the file and failing reference, correct it, and rerun the validation checklist.
+
+### 4. Validate Documentation
 
 After generating docs, verify:
-- [ ] All internal links work (no broken references)
+- [ ] All internal links point to existing files (no broken references)
 - [ ] Code examples are accurate and runnable
-- [ ] No duplicate information across files
-- [ ] Consistent formatting and heading levels
-- [ ] Existing content preserved (enhanced, not replaced)
+- [ ] No duplicate information appears across files
+- [ ] Heading levels and formatting are consistent
+- [ ] Existing content is preserved or the user approved its replacement
+- [ ] `git diff --check` exits 0
 
-### Guidelines
+## Edge Cases
+
+- If no README exists, create one only after confirming the project name, purpose, and first-use command from source files.
+- For a monorepo, document each independently usable package and link it from the root README.
+- Skip API, database, or deployment pages when the project has no such surface; do not create empty placeholders.
+- Treat generated or vendor documentation as read-only unless the user explicitly requests an update.
+
+## Acceptance Criteria
+
+- [ ] Root README has a purpose statement, quickstart, feature summary, module links, contribution guidance, and license information.
+- [ ] Every new page has a clear purpose, a valid internal link, and project-specific examples.
+- [ ] Mermaid diagrams reflect components found during analysis.
+- [ ] Validation results and every changed path are reported.
+
+### Writing Guidelines
 
 - Keep docs concise and scannable — prefer bullet lists and tables over prose
 - Adapt structure to project type (skip categories that don't apply)

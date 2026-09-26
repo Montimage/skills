@@ -313,4 +313,12 @@ def main():
 
 
 if __name__ == "__main__":
-    sys.exit(main())
+    try:
+        sys.exit(main())
+    except Exception as exc:
+        print(
+            f"Error: usage documentation generation failed for the requested target "
+            f"or plan: {exc}. Check --target, --plan, and --env-file, then rerun.",
+            file=sys.stderr,
+        )
+        sys.exit(1)
