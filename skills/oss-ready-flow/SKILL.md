@@ -29,16 +29,25 @@ If any prerequisite is missing, stop and tell the user; do not silently degrade.
 This skill invokes `oss-ready`. Verify it is installed before the first step that changes anything:
 
 ```bash
-asm list -p claude --json | grep -q '"oss-ready"' || {
+if ! command -v asm >/dev/null 2>&1; then
+  echo "Missing required CLI: asm" >&2
+  echo "Install it:      npm install -g agent-skill-manager" >&2
+  exit 1
+fi
+installed_skills="$(asm list --json)" || {
+  echo "Unable to query installed skills with asm" >&2
+  exit 1
+}
+printf '%s\n' "$installed_skills" | grep -q '"name": "oss-ready"' || {
   echo "Missing required skill: oss-ready" >&2
   echo "Install it:      asm install oss-ready -p claude --yes" >&2
   echo "No asm yet:      npm install -g agent-skill-manager" >&2
-  echo "Verify:          asm list -p claude --json | grep 'oss-ready'" >&2
+  echo "Verify:          asm list --json | grep 'oss-ready'" >&2
   exit 1
 }
 ```
 
-If the check fails, stop and print the commands above; do not continue with a partial run.
+Check all installed providers, not only Claude. If `asm` is absent, its lookup fails, or the skill is missing, stop with the corresponding error; do not continue with a partial run.
 
 ## Safety Model
 

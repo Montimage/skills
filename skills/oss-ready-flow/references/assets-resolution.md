@@ -19,6 +19,8 @@ if [ -z "$BORROWED_PATH" ] || [ ! -d "$BORROWED_PATH/assets" ]; then
   echo "Verify:          asm list -p claude --json | grep 'oss-ready'" >&2
   exit 1
 fi
+# The approved destination may not exist in a fresh target repo.
+mkdir -p docs
 cp "$BORROWED_PATH/assets/OSS_READINESS_CHECKLIST.md" docs/OSS_READINESS_CHECKLIST.md
 # Copy any other approved templates from "$BORROWED_PATH/assets/" here.
 ```
