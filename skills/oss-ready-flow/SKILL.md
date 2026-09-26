@@ -26,7 +26,7 @@ If any prerequisite is missing, stop and tell the user; do not silently degrade.
 
 ## Dependency Preflight (mandatory)
 
-This skill invokes `oss-ready`. Verify it is installed before the first step that changes anything:
+This skill invokes `oss-ready`. Run this preflight before Repo Sync, stashing, or any target-repo edits. Check the installed dependency's required checklist, not just its name:
 
 ```bash
 if ! command -v asm >/dev/null 2>&1; then
@@ -45,9 +45,30 @@ printf '%s\n' "$installed_skills" | grep -q '"name": "oss-ready"' || {
   echo "Verify:          asm list --json | grep 'oss-ready'" >&2
   exit 1
 }
+# Run in a subshell so the EXIT trap cleans the borrow at the end of preflight.
+(
+  set -e
+  BORROWED_PATH=''
+  cleanup_borrow() {
+    if [ -n "$BORROWED_PATH" ]; then
+      asm cleanup "$BORROWED_PATH"
+    fi
+  }
+  trap cleanup_borrow EXIT
+  if ! BORROWED_PATH="$(asm get oss-ready --path 2>/dev/null)"; then
+    echo "Unable to resolve installed skill: oss-ready; install/update it with asm" >&2
+    exit 1
+  fi
+  if [ -z "$BORROWED_PATH" ] || [ ! -d "$BORROWED_PATH/assets" ] ||
+     [ ! -f "$BORROWED_PATH/assets/OSS_READINESS_CHECKLIST.md" ]; then
+    echo "Incompatible oss-ready: missing assets/OSS_READINESS_CHECKLIST.md" >&2
+    echo "Install/update oss-ready with asm before running this flow" >&2
+    exit 1
+  fi
+) || exit 1
 ```
 
-Check all installed providers, not only Claude. If `asm` is absent, its lookup fails, or the skill is missing, stop with the corresponding error; do not continue with a partial run.
+Check all installed providers, not only Claude. If `asm` is absent, lookup fails, the skill is missing, or the installed assets are incompatible, stop before touching the target repo. Preserve the exact borrowed path and clean it on success and failure; do not continue with a partial run.
 
 ## Safety Model
 

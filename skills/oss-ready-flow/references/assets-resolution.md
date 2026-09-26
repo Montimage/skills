@@ -4,19 +4,22 @@ Before copying a template, resolve the installed `oss-ready` skill directory and
 
 ```bash
 set -e
-BORROWED_PATH="$(asm get oss-ready --path 2>/dev/null || true)"
+BORROWED_PATH=''
 cleanup_borrow() {
   if [ -n "$BORROWED_PATH" ]; then
     asm cleanup "$BORROWED_PATH"
   fi
 }
 trap cleanup_borrow EXIT
+if ! BORROWED_PATH="$(asm get oss-ready --path 2>/dev/null)"; then
+  echo "Unable to resolve installed skill: oss-ready; install/update it with asm" >&2
+  exit 1
+fi
 
-if [ -z "$BORROWED_PATH" ] || [ ! -d "$BORROWED_PATH/assets" ]; then
-  echo "Missing required skill or assets: oss-ready/assets" >&2
-  echo "Install it:      asm install oss-ready -p claude --yes" >&2
-  echo "No asm yet:      npm install -g agent-skill-manager" >&2
-  echo "Verify:          asm list -p claude --json | grep 'oss-ready'" >&2
+if [ -z "$BORROWED_PATH" ] || [ ! -d "$BORROWED_PATH/assets" ] ||
+   [ ! -f "$BORROWED_PATH/assets/OSS_READINESS_CHECKLIST.md" ]; then
+  echo "Incompatible or missing oss-ready: assets/OSS_READINESS_CHECKLIST.md is required" >&2
+  echo "Install/update oss-ready with asm before copying templates" >&2
   exit 1
 fi
 # The approved destination may not exist in a fresh target repo.
@@ -25,4 +28,4 @@ cp "$BORROWED_PATH/assets/OSS_READINESS_CHECKLIST.md" docs/OSS_READINESS_CHECKLI
 # Copy any other approved templates from "$BORROWED_PATH/assets/" here.
 ```
 
-The `EXIT` trap calls `asm cleanup` with the original non-empty stdout path after all copying and on every failure; an empty path is never cleaned up. Use the same borrowed prefix for other approved templates. If resolution or the `assets/` check fails, stop; do not guess a relative path or continue with partial output.
+The `EXIT` trap calls `asm cleanup` with the original non-empty stdout path after all copying and on every failure; an empty path is never cleaned up. Use the same borrowed prefix for other approved templates. Check the checklist file before `mkdir` or `cp`, even if preflight passed (the installation may have changed). If resolution or either asset check fails, stop; do not guess a relative path or continue with partial output.
