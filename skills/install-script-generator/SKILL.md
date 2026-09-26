@@ -1,10 +1,11 @@
 ---
 name: install-script-generator
+description: "Generate cross-platform install scripts with environment detection, verification, rollback, and docs. Use when automating installs across Windows, Linux, or macOS. Don't use for feature code, CI setup, or docs-only requests."
+license: Apache-2.0
 effort: high
-description: Generate cross-platform installation scripts for any software, library, or module. Use when users ask to "create an installer", "generate installation script", "automate installation", "setup script for X", "install X on any OS", "write an install script", "deployment script", or need automated deployment across Windows, Linux, and macOS. Follows a three-phase approach with environment detection, installation planning with verification/rollback, and documentation generation. Trigger this skill whenever the user wants to automate installing or deploying software, even if they just say "how do I install X everywhere".
 metadata:
-  version: 1.2.0
-  creator: Montimage
+  version: 1.3.1
+  author: Montimage
 ---
 
 # Install Script Generator
@@ -130,6 +131,24 @@ The skill generates these files in the current directory:
 | `installation_plan.yaml` | Detailed installation steps |
 | `install_report.md` | Execution log and status |
 | `USAGE_GUIDE.md` | User documentation |
+
+## Acceptance Criteria
+
+- [ ] `env_info.json` records the detected platform, architecture, package managers, permissions, and paths.
+- [ ] `installation_plan.yaml` gives every installation step a command, verification check, and rollback where applicable.
+- [ ] Execution verifies each critical step, rolls back on failure, and returns a non-zero status for failed installation.
+- [ ] `install_report.md` and `USAGE_GUIDE.md` identify the target, platform, status, and troubleshooting path.
+- [ ] Run the generated plan with `--dry-run` before executing package-manager commands.
+
+## Expected Output
+
+A successful run prints a JSON environment summary, writes the plan and reports listed above, and records `SUCCESS` only after all critical verification commands pass. A failed run prints the failing step and rollback result to stderr and exits non-zero.
+
+## Edge Cases
+
+- If no supported package manager is detected, stop with a platform-specific installation question instead of emitting an executable placeholder plan.
+- If `env_info.json` or the plan is missing, report the exact path and rerun the preceding phase.
+- Treat sudo/admin elevation, shell differences, ARM architectures, and package-manager prompts as explicit plan inputs.
 
 ## Platform-Specific Notes
 

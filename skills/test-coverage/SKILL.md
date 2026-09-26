@@ -1,15 +1,26 @@
 ---
 name: test-coverage
+description: "Improve test coverage by finding untested branches, error paths, and edge cases. Use when measuring or strengthening a project's tests. Don't use for production debugging, code review, or feature implementation."
+license: Apache-2.0
 effort: high
-description: Expand unit test coverage by targeting untested branches and edge cases. Use when users ask to "increase test coverage", "add more tests", "expand unit tests", "cover edge cases", "improve test coverage", "find untested code", "what's not tested", "run coverage report", "write missing tests", or want to identify and fill gaps in existing test suites. Adapts to project's testing framework. Trigger this skill whenever the user mentions test gaps, untested code, coverage percentages, or wants to harden their test suite.
 metadata:
-  version: 1.3.0
-  creator: Montimage
+  version: 1.4.0
+  author: Montimage
 ---
 
 # Test Coverage
 
 Expand unit test coverage by targeting untested branches and edge cases.
+
+## When to Use
+
+Use this skill when a project needs measurable coverage analysis, targeted tests for uncovered paths, or stronger boundary/error behavior. Preserve the project's framework and existing test conventions.
+
+## Prerequisites
+
+- Work in the target git repository with its dependency manager and test runner available.
+- Identify the test framework and existing coverage configuration before selecting a command.
+- Keep the working tree reviewable; do not overwrite existing tests or fixtures without showing the diff.
 
 ## Repo Sync Before Edits (mandatory)
 
@@ -41,24 +52,7 @@ Before making any changes:
 
 Collect the results from both agents before proceeding.
 
-Then run the appropriate coverage command for the project's stack:
-
-```bash
-# JavaScript/TypeScript (Jest)
-npx jest --coverage --coverageReporters=text --coverageReporters=json-summary
-
-# JavaScript/TypeScript (Vitest)
-npx vitest run --coverage
-
-# Python (pytest)
-python -m pytest --cov=. --cov-report=term-missing
-
-# Go
-go test -coverprofile=coverage.out ./... && go tool cover -func=coverage.out
-
-# Rust
-cargo tarpaulin --out Stdout
-```
+Then read `references/coverage-commands.md` and run the command matching the detected stack. Preserve the project's existing flags and configuration.
 
 From the report, identify:
 - Untested branches and code paths (look for lines marked as uncovered)
@@ -108,10 +102,32 @@ For each gap, write focused test cases:
 
 Run coverage again with the same command from Step 1 and confirm:
 - New tests pass
-- Coverage percentage increased
-- Previously uncovered lines are now covered
+- Coverage percentage increased or the remaining gap is explained
+- Previously uncovered lines are now covered or explicitly reported
 
 Report the before/after coverage numbers to the user.
+
+## Example
+
+Input: `Increase coverage for the parser's error paths.`
+
+```text
+Expected output: baseline coverage, prioritized uncovered branches, focused test changes, passing test command, and before/after coverage with remaining gaps.
+```
+
+## Acceptance Criteria
+
+- [ ] The baseline coverage command, exit status, and line/branch numbers are recorded.
+- [ ] Every selected gap names a source path/line and a concrete test scenario.
+- [ ] New tests follow existing fixtures, assertion style, and naming conventions.
+- [ ] The same coverage command passes after edits and before/after numbers are reported.
+- [ ] No unrelated production or test files are changed.
+
+## Edge Cases
+
+- If no supported framework or coverage configuration is present, stop and request the project's test command.
+- If coverage is already high, target risk-weighted error paths rather than adding trivial tests.
+- Treat flaky, integration-only, generated, and platform-specific paths as explicit limitations; do not claim they are covered without evidence.
 
 ## Guidelines
 

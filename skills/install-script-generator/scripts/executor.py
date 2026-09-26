@@ -367,4 +367,13 @@ def main():
 
 
 if __name__ == "__main__":
-    sys.exit(main())
+    try:
+        sys.exit(main())
+    except Exception as exc:
+        print(
+            f"Error: installation plan execution failed while reading the requested "
+            f"plan or writing its report: {exc}. Check --plan and output permissions, "
+            "then rerun with --dry-run.",
+            file=sys.stderr,
+        )
+        sys.exit(1)

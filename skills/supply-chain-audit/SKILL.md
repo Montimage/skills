@@ -1,9 +1,10 @@
 ---
 name: supply-chain-audit
-description: "Audit npm/pip/Docker/GitHub Actions for supply chain risks; apply cooldown, lockfile, ignore-scripts, SHA pinning, scanning after approval. Use for 'supply chain audit', 'harden dependencies'. Skip for runtime vulns, secret scanning, code review."
+description: "Audit npm, Python, Docker, and GitHub Actions supply-chain controls. Use when hardening dependency workflows. Don't use for runtime vulnerabilities, secret scanning, or generic dependency updates."
+license: Apache-2.0
 effort: high
 metadata:
-  version: 1.0.0
+  version: 1.1.0
   author: Montimage
 ---
 
@@ -189,10 +190,35 @@ After all approved edits:
 
 ## Output and writing rules
 
-- **Never invent findings.** If a check requires running a command you can't run in this environment, say so and skip the check — don't fabricate the answer.
-- **Quote file contents verbatim** when reporting on them. Don't paraphrase `.npmrc` or a workflow YAML.
-- **Severity discipline.** Reserve Critical for controls that actively prevent attacks documented in the wild (no cooldown, postinstall enabled, Actions pinned by tag). Reserve High for controls that materially reduce blast radius. Medium and Low are for hygiene.
-- **Show the diff, not just the intent.** The user must be able to copy-paste your proposed change and see the same thing land.
+- **Never invent findings.** If a check requires a command you cannot run, say so and mark it unknown; do not fabricate evidence.
+- **Quote file contents verbatim** when reporting on them. Do not paraphrase `.npmrc` or workflow YAML.
+- **Severity discipline.** Reserve Critical for controls that actively prevent documented attacks; use High for blast-radius reduction and Medium/Low for hygiene.
+- **Show the diff, not just the intent.** Every proposed change needs evidence, impact, and reversibility.
+
+## Example
+
+For an npm-only repository, detect the manifest and lockfile, read only `references/npm.md`, emit the Phase 1 and Phase 2 reports, then stop until the user explicitly requests a plan.
+
+```text
+Expected output: Detect PASS → Audit report with findings/evidence → stop for approval.
+```
+
+## Acceptance Criteria
+
+- [ ] Phase 1 identifies every supported ecosystem and reads only its relevant reference file.
+- [ ] Phase 2 reports findings with evidence, severity, posture, and a recommended-changes preview.
+- [ ] Phase 3 includes a diff, impact statement, and reversal path for every approved finding.
+- [ ] Phase 4 applies only explicit approvals, shows the resulting diff, runs cheap sanity checks, and leaves commit/push to the user.
+
+## Expected Output
+
+A complete run prints phase completion blocks and produces an evidence-backed audit report, an approval-gated change plan, and an apply summary listing changed files. An audit-only run stops after Phase 2.
+
+## Edge Cases
+
+- If no supported ecosystem is detected, report that result and stop without inventing controls.
+- If multiple lockfiles or ecosystems exist, audit each separately rather than choosing one silently.
+- If a command cannot run or a file differs from the approved plan, mark it unknown or stop for user review; never fabricate or continue past the gate.
 
 ## Optional follow-ups (offer only after Phase 4)
 

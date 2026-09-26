@@ -1,9 +1,15 @@
 <!--
-AI-SKIP: This README is for humans. AI agents reading this skill should
-read ../SKILL.md instead — that file is the source of truth for behavior.
+  DO NOT READ THIS FILE — This README.md is for human catalog browsing only.
+  It ships inside the .skill package but is NEVER auto-loaded into agent context.
+  The runtime loader only reads SKILL.md + references/ + scripts/ + agents/ when the skill triggers.
+  If you're an AI agent, read the SKILL.md file instead for skill instructions.
 -->
 
 # OSS Ready Flow
+
+> Coordinate an end-to-end OSS release flow with six sequential steps and user checkpoints.
+
+**Author:** Montimage
 
 End-to-end orchestrator that takes a project from its current state to OSS-ready in 6 sequential steps, with one sub-agent per step and a user checkpoint between every step.
 

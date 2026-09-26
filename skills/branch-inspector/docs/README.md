@@ -1,6 +1,15 @@
+<!--
+  DO NOT READ THIS FILE — This README.md is for human catalog browsing only.
+  It ships inside the .skill package but is NEVER auto-loaded into agent context.
+  The runtime loader only reads SKILL.md + references/ + scripts/ + agents/ when the skill triggers.
+  If you're an AI agent, read the SKILL.md file instead for skill instructions.
+-->
+
 # Branch Inspector
 
 > **Note for AI agents:** This README is for humans. If you're an AI agent looking for instructions, read `SKILL.md` in the parent directory instead.
+
+**Author:** Montimage
 
 A skill for inspecting a single git branch against `main` during a cleanup process. Produces a deep overview of what the branch contains, surfaces signals (merge status, staleness, conflict risk, implementation intent), helps you decide whether to **delete / archive / open a PR / keep**, and emits a concrete action plan with exact commands.
 

@@ -274,4 +274,12 @@ def main():
 
 
 if __name__ == "__main__":
-    sys.exit(main())
+    try:
+        sys.exit(main())
+    except Exception as exc:
+        print(
+            f"Error: environment exploration failed while writing env_info.json: {exc}. "
+            "Check the working directory permissions and rerun env_explorer.py.",
+            file=sys.stderr,
+        )
+        sys.exit(1)

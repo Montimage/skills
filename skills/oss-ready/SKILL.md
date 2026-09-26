@@ -1,9 +1,10 @@
 ---
 name: oss-ready
-description: "Add OSS-standard files (README, CONTRIBUTING, LICENSE, CODE_OF_CONDUCT, SECURITY, GitHub templates) and run an 8-section readiness audit. Use for 'make this open source', 'OSS readiness', 'public release'. Skip for marketing pages or closed code."
+description: "Prepare a repository for open-source release with standard files, GitHub templates, and an eight-section readiness audit. Use when making a project public. Don't use for marketing pages, closed code, or docs-only edits."
+license: Apache-2.0
 effort: high
 metadata:
-  version: 1.8.0
+  version: 1.8.2
   author: Montimage
 ---
 
