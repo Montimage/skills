@@ -1,7 +1,8 @@
 {
   "skill": "oss-ready-flow",
-  "version": "1.0.0",
-  "description": "Minimal smoke tests: skill triggers on full-OSS-prep phrasing and walks through the 6-step orchestration without crashing.",
+  "version": "1.1.0",
+  "description": "Minimal smoke tests: skill triggers on full-OSS-prep phrasing, walks through the 6-step orchestration, and emits an understandable Final Summary.",
+  "human_review": "When grading positive cases, ask a human reviewer whether they could find the result, separate facts from assumptions, trace claims to .oss-ready/ reports, and identify the next decision. Record answers in the run's feedback; missing, blank, or nonresponsive feedback leaves human understanding unconfirmed. Negative-trigger cases are excluded.",
   "cases": [
     {
       "id": "trigger-1-full-oss-prep",
@@ -20,6 +21,17 @@
         "Skill recognises this is an OSS-flow request, starts at step 1 (audit), and continues to step 2 (branches).",
         "Step 2 produces a per-branch plan and asks for per-branch approval; never deletes silently.",
         "Plan is written to .oss-ready/02-branches.md."
+      ]
+    },
+    {
+      "id": "trigger-3-final-summary-understanding",
+      "prompt": "Continue the OSS release flow; I want to stop after the README step.",
+      "expected_behavior": [
+        "Step 7 Final Summary runs even though the user stopped early, and labels each step done | partial | skipped.",
+        "Main result is findable: the first line of the Final Summary states the overall status (PASS or PARTIAL).",
+        "Facts and assumptions are separated: each done status names its .oss-ready/ report or check; unverified items appear under Uncertainty.",
+        "Claims are traceable: every step line points to its .oss-ready/ report, and no file is reported as approved without the user's approval of its diff.",
+        "Next decision is clear: the Decision line names the pending approval or says 'No approval needed', and manual follow-ups are listed separately."
       ]
     },
     {

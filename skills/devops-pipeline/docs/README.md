@@ -48,11 +48,12 @@ graph TD
 
 ## Output
 
-Creates `.pre-commit-config.yaml` and `.github/workflows/ci.yml` configured for the detected project stack with appropriate formatters, linters, type checkers, and security scanners.
+Creates `.pre-commit-config.yaml` and `.github/workflows/ci.yml` configured for the detected project stack with appropriate formatters, linters, type checkers, and security scanners, then reports the result, the verification commands run, what stays untested, and any approval needed before commit or push.
 
 ## Resources
 
 | Path | Description |
 |---|---|
-| [`../references/precommit-configs.md`](../references/precommit-configs.md) | Pre-commit configurations by language |
+| [`../references/discovery-agents.md`](../references/discovery-agents.md) | Briefs for the three parallel discovery agents |
+| [`../references/precommit-configs.md`](../references/precommit-configs.md) | Tool selection and pre-commit configurations by language |
 | [`../references/github-actions.md`](../references/github-actions.md) | GitHub Actions workflow templates |

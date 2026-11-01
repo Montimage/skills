@@ -7,7 +7,7 @@ Write `SKILL_AUDIT.md` in the current working directory with this structure:
 
 **Date**: YYYY-MM-DD
 **Skill Path**: path/to/skill
-**Auditor**: skill-auditor v1.0
+**Auditor**: skill-auditor v[metadata.version from its SKILL.md]
 
 ## Skill Overview
 

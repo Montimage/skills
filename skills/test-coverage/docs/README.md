@@ -46,6 +46,13 @@ graph TD
 /test-coverage
 ```
 
+## Resources
+
+| Path | Description |
+|---|---|
+| `references/coverage-commands.md` | Coverage commands per stack (Jest, Vitest, pytest, Go, Rust) |
+| `references/report-format.md` | Step Completion Report block, final report format, and understanding checks |
+
 ## Output
 
-Generates new test files or adds test cases to existing test files, targeting untested branches, error paths, boundary conditions, and edge cases. Reports before/after coverage numbers to confirm improvement.
+Generates new test files or adds test cases to existing test files, targeting untested branches, error paths, boundary conditions, and edge cases. Ends with a concise report: status, before/after coverage table, uncovered gaps with reasons, and any decision needing approval.
