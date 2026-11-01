@@ -80,6 +80,10 @@ registry=https://registry.npmjs.org/
 
 <!-- same structure -->
 
+## Not verified
+
+Controls marked `unknown` and checks you could not run, each with the reason (e.g., "gha: CI runs in a private Jenkins instance — not inspected"). Write "None" if every check was inspected.
+
 ## Recommended changes (preview)
 
 The fixes below are previewed only; full diffs and impact analysis are in the Phase 3 plan if you approve proceeding.
@@ -107,3 +111,4 @@ Reply with one of:
 - **Recommended fix** is a *pointer* to the Phase 3 plan, not the full plan itself. Keep it to one or two lines.
 - **IDs** use `<ecosystem>-<number>` (e.g., `npm-1`, `docker-2`, `gha-3`). The same IDs are reused in Phase 3 so the user can approve a subset by ID.
 - Severities follow the per-ecosystem references. Don't invent your own.
+- **Not verified** is required. Never fold an `unknown` control into a finding or into the posture as if it were inspected.

@@ -13,6 +13,14 @@
 
 A skill that audits a project's defenses against supply-chain attacks — compromised npm/PyPI packages, poisoned transitive dependencies, malicious post-install scripts, untrusted container base images, hijacked GitHub Actions — and applies layered fixes only after you approve them.
 
+## Highlights
+
+- Audits npm, Python, Docker, and GitHub Actions controls against recent supply-chain incidents.
+- Reports every finding with quoted evidence, a severity, and a stable ID; lists anything it could not inspect under **Not verified**.
+- Proposes exact diffs with honest impact and reversibility notes, then applies only the IDs you approve.
+- Never commits or pushes; you review `git diff` yourself.
+- Optionally proposes a small edit to itself when a run shows a lasting mismatch with your style or environment (applied only after you approve).
+
 ## What it does
 
 1. **Detect** which ecosystems are in play (npm, Python, Docker, GitHub Actions).
@@ -25,9 +33,23 @@ The phase boundaries are gates. The skill stops and waits for explicit user inpu
 
 ## When to use
 
-- "Audit supply chain", "harden dependencies", "avoid supply chain attack".
-- Preparing a project for production or public release.
-- After hearing about a new package-manager incident and wondering if you're exposed.
+| Say this... | Skill will... |
+| --- | --- |
+| "Audit supply chain" | Detect ecosystems and emit an evidence-backed audit report, then stop |
+| "Harden dependencies" / "avoid supply chain attack" | Audit, then draft a change plan once you ask for one |
+| "Run a supply chain audit on services/api" | Audit only that subdirectory |
+| "Are we exposed to the latest npm incident?" | Check the cooldown, install-script, and lockfile controls that block that class of attack |
+
+## How it works
+
+```mermaid
+graph TD
+    A["Detect ecosystems"] --> B["Audit and report"]
+    B -->|"you ask for a plan"| C["Plan diffs with impact"]
+    C -->|"you approve IDs"| D["Apply approved changes"]
+    style A fill:#4CAF50,color:#fff
+    style D fill:#2196F3,color:#fff
+```
 
 ## When not to use
 
@@ -94,12 +116,13 @@ The skill was benchmarked against an unguided baseline on three eval cases (npm-
 
 See `SKILL.md` for the workflow and `../references/` for the ecosystem checklists, report template, change plan, and scoring rules.
 
-## Reference index
+## Resources
 
-The skill is internally documented in `SKILL.md` plus reference files under `../references/`:
-
-- [`../references/npm.md`](../references/npm.md), [`../references/python.md`](../references/python.md), [`../references/docker.md`](../references/docker.md), [`../references/github-actions.md`](../references/github-actions.md) — per-ecosystem checklists and remediation snippets.
-- [`../references/audit-report.md`](../references/audit-report.md) — Phase 2 template.
-- [`../references/change-plan.md`](../references/change-plan.md) — Phase 3 template.
-- [`../references/scoring.md`](../references/scoring.md) — posture rating rubric.
-- [`../scripts/detect_ecosystems.sh`](../scripts/detect_ecosystems.sh) — ecosystem detection helper.
+| Path | Description |
+| --- | --- |
+| [`../references/npm.md`](../references/npm.md), [`../references/python.md`](../references/python.md), [`../references/docker.md`](../references/docker.md), [`../references/github-actions.md`](../references/github-actions.md) | Per-ecosystem checklists and remediation snippets |
+| [`../references/audit-report.md`](../references/audit-report.md) | Phase 2 report template |
+| [`../references/change-plan.md`](../references/change-plan.md) | Phase 3 plan template |
+| [`../references/scoring.md`](../references/scoring.md) | Posture rating rubric |
+| [`../scripts/detect_ecosystems.sh`](../scripts/detect_ecosystems.sh) | Ecosystem detection helper |
+| [`../evals/evals.json`](../evals/evals.json) | Eval cases with correctness and understanding assertions |

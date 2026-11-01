@@ -1,10 +1,18 @@
 # Sub-agent Briefs (verbatim)
 
-Use these as `prompt` arguments to the `Agent` tool, with `subagent_type: general-purpose`. Each brief is self-contained — the sub-agent has none of the main agent's context.
+Use these as `prompt` arguments to the `Agent` tool, with `subagent_type: general-purpose` (or `Explore` for read-only work). Each brief is self-contained — the sub-agent has none of the main agent's context.
+
+Dispatch rules for every worker:
+
+1. Pass the exact `.oss-ready/` output path for the step.
+2. Pass the prohibited scope ("do NOT modify X").
+3. Pass `OSS_READY_DIR` (from the Dependency Preflight) to the Auditor and the Docs Writer.
+4. Require a summary of 200 words or fewer.
+5. Review the result and surface it to the user before the step's checkpoint.
 
 ## Step 1 — Auditor (read-only)
 
-> Run the `oss-ready` skill's Step 5 audit (8-section + bonus checklist) against the current repo. Do NOT create or modify files. Do NOT create a feature branch. Read-only audit only. For each checklist item return `{section, item, status: done|missing|n/a, evidence}`. Then write a markdown report to `.oss-ready/01-audit.md` with: (a) per-section pass/fail counts, (b) flat list of missing items, (c) flat list of items already done, (d) recommended priority order for the remaining steps. Return a 10-line summary to the main agent.
+> Read `$OSS_READY_DIR/SKILL.md` and run the `oss-ready` skill's Step 5 audit (8-section + bonus checklist) against the current repo. Do NOT create or modify files. Do NOT create a feature branch. Read-only audit only. For each checklist item return `{section, item, status: done|missing|n/a, evidence}`. Then write a markdown report to `.oss-ready/01-audit.md` with: (a) per-section pass/fail counts, (b) flat list of missing items, (c) flat list of items already done, (d) recommended priority order for the remaining steps. Return a 10-line summary to the main agent.
 
 ## Step 2 — Branch Analyst (read-only)
 
@@ -16,7 +24,7 @@ Use these as `prompt` arguments to the `Agent` tool, with `subagent_type: genera
 
 ## Step 3b — Docs Writer
 
-> Apply the approved plan from `.oss-ready/03-docs-plan.md`. For each file: write the new content (creates) or produce a diff and apply it (updates). Use the `oss-ready` skill's asset templates where applicable (`cp` LICENSE, CODE_OF_CONDUCT.md, SECURITY.md from oss-ready/assets — never read+write those files). For all other docs, base content on the actual codebase. After each file, run `git diff <file>` and capture the diff in `.oss-ready/03-docs-diffs.md`. Do NOT commit. Return a list of files written.
+> Apply the approved plan from `.oss-ready/03-docs-plan.md`. For each file: write the new content (creates) or produce a diff and apply it (updates). Use the `oss-ready` skill's asset templates where applicable: `cp` LICENSE, CODE_OF_CONDUCT.md, and SECURITY.md from `$OSS_READY_DIR/assets/` and never read+write those files, because their language triggers content filtering on read. Use `sed` for placeholder substitution after copying. For all other docs, base content on the actual codebase. After each file, run `git diff <file>` and capture the diff in `.oss-ready/03-docs-diffs.md`. Do NOT commit. Return a list of files written.
 
 ## Step 4 — README Polisher
 

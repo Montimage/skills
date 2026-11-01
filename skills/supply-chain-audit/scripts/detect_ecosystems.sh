@@ -10,7 +10,7 @@
 # Exit codes:
 #   0 — at least one ecosystem detected, listed on stdout
 #   2 — no supported ecosystem present (descriptive message on stderr)
-#   3 — not inside a git repository (descriptive message on stderr)
+#   3 — path missing or not inside a git repository (descriptive message on stderr)
 
 set -euo pipefail
 
@@ -27,6 +27,7 @@ cd "$root"
 if ! git rev-parse --git-dir >/dev/null 2>&1; then
   echo "Error: '$root' is not inside a git repository." >&2
   echo "The supply-chain-audit skill requires git so it can show diffs before applying changes." >&2
+  echo "Fix: pass a path inside a git checkout, or run 'git init' in '$root' first." >&2
   exit 3
 fi
 
@@ -99,6 +100,7 @@ fi
 if [ "$found" -eq 0 ]; then
   echo "No supported ecosystem detected in '$root'." >&2
   echo "Supported triggers: package.json, pyproject.toml/requirements*.txt, Dockerfile, .github/workflows/*.y*ml" >&2
+  echo "Fix: pass the subdirectory that holds the manifests, or add one of the files above." >&2
   exit 2
 fi
 

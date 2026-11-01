@@ -2,12 +2,23 @@
 
 ## Table of Contents
 
+- [Tool Selection by Language](#tool-selection-by-language)
 - [JavaScript/TypeScript](#javascripttypescript)
 - [Python](#python)
 - [Go](#go)
 - [Rust](#rust)
 - [Java](#java)
 - [Multi-language](#multi-language)
+
+## Tool Selection by Language
+
+| Language | Formatter | Linter | Security | Types |
+|----------|-----------|--------|----------|-------|
+| JS/TS | Prettier | ESLint | npm audit | TypeScript |
+| Python | Black/Ruff | Ruff | Bandit | mypy |
+| Go | gofmt | golangci-lint | gosec | built-in |
+| Rust | rustfmt | Clippy | cargo-audit | built-in |
+| Java | google-java-format | Checkstyle | SpotBugs | - |
 
 ## JavaScript/TypeScript
 

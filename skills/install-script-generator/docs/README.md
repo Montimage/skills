@@ -57,3 +57,5 @@ Generates four files: `env_info.json` (system analysis), `installation_plan.yaml
 | [`../scripts/plan_generator.py`](../scripts/plan_generator.py) | Installation plan generator |
 | [`../scripts/executor.py`](../scripts/executor.py) | Plan executor with verification |
 | [`../scripts/doc_generator.py`](../scripts/doc_generator.py) | Usage documentation generator |
+| [`../references/platform-notes.md`](../references/platform-notes.md) | Windows, Linux, and macOS planning rules |
+| [`../references/reporting.md`](../references/reporting.md) | Step reports, final response contract, and review criteria |

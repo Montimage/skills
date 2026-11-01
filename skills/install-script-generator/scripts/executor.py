@@ -343,6 +343,7 @@ def main():
     plan_file = Path(args.plan)
     if not plan_file.exists():
         print(f"Error: Plan file not found: {plan_file}", file=sys.stderr)
+        print("Run plan_generator.py first, or pass the correct path with --plan.", file=sys.stderr)
         return 1
 
     with open(plan_file) as f:
@@ -363,7 +364,18 @@ def main():
             f.write(markdown)
         print(f"Report saved to: {output_file}")
 
-    return 0 if report["success"] else 1
+    if not report["success"]:
+        failed = next((s for s in report["steps"] if s["step"] == report["failed_step"]), {})
+        print(
+            f"Error: installation of {report['target']} failed at step "
+            f"{report['failed_step']} ({failed.get('name', 'unknown')}) in {plan_file}; "
+            "rollback commands of completed steps were run. "
+            f"See {output_file} for the command output, fix the step's command or "
+            "permissions, then rerun with --dry-run.",
+            file=sys.stderr,
+        )
+        return 1
+    return 0
 
 
 if __name__ == "__main__":

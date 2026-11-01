@@ -49,7 +49,7 @@ graph TD
 
 ## Output
 
-Generates `SKILL_AUDIT.md` with skill overview, risk summary table (9 categories), detailed findings with file:line references, files inventory, and a clear verdict (SAFE TO INSTALL / INSTALL WITH CAUTION / DO NOT INSTALL).
+Generates `SKILL_AUDIT.md` with skill overview, risk summary table (9 categories), detailed findings with file:line references, files inventory, and a clear verdict (SAFE TO INSTALL / INSTALL WITH CAUTION / DO NOT INSTALL). The chat reply states the verdict, evidence, what was not verified, and the install decision.
 
 ## Resources
 
@@ -57,3 +57,4 @@ Generates `SKILL_AUDIT.md` with skill overview, risk summary table (9 categories
 |---|---|
 | [`../scripts/scan_skill.py`](../scripts/scan_skill.py) | Automated pattern scanner |
 | [`../references/security-checklist.md`](../references/security-checklist.md) | Full risk taxonomy and analysis guidelines |
+| [`../references/`](../references/) | Input resolution, research contract, report template, command allowlist, install offer, step reports, self-audit notes |

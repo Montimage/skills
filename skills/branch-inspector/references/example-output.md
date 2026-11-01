@@ -33,6 +33,7 @@ Notable findings:
 
 Recommendation: archive
 Reasoning: substantial work worth preserving but stale and conflict-heavy; not viable as a PR without a major rebase.
+Uncertainty: intent and conflict risk are inferred; CI status taken from the absence of checks on the tip, not a CI query.
 ```
 
 The decision prompt that follows:

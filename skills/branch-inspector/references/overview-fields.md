@@ -21,7 +21,7 @@ Collect as much signal as the available tools allow. Run independent git command
 - Files changed vs main (`git diff --stat main...<branch>`).
 - Lines added/removed.
 - Top-touched directories.
-- File overlap with recent main activity (last 30 days) — flags likely conflicts.
+- File overlap with recent main activity (last 30 days): `git log --since=30.days --name-only --format= main` intersected with the branch's changed files. Rate conflict risk: **low** = 0 overlapping files, **medium** = 1-5, **high** = more than 5 or any file main rewrote (over half its lines changed).
 
 ## Implementation depth (the part that matters for the decision)
 
@@ -33,7 +33,7 @@ Go beyond mechanical stats. Read enough of the diff and commit messages to expla
 - Identify the **intent**: feature, refactor, bugfix, experiment, spike, abandoned WIP. Signals: TODO/FIXME density, presence of tests, commit message quality, whether commits look polished or scratch.
 - Note unfinished signals: failing-looking commit messages ("WIP", "broken", "trying X"), commented-out code, dangling debug prints.
 
-If the diff is too large to read in full, spawn an Explore subagent to summarize the implementation rather than skimming superficially. A weak summary is worse than admitting the diff is too large.
+**Large-diff threshold:** the diff exceeds 2,000 changed lines or 40 files, excluding vendored, lockfile, and generated files. Above it, spawn an Explore subagent to summarize the implementation instead of skimming, and say so on the overview's `Uncertainty:` line. A weak summary is worse than admitting the diff was not read in full.
 
 ## Staleness signals
 

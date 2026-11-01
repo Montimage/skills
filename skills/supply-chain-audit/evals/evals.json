@@ -12,7 +12,11 @@
         "Findings include a High entry for the CI step using `npm install` instead of `npm ci`.",
         "Each finding cites evidence (the actual missing file or the workflow line), not just generic best-practice text.",
         "Skill stops at Phase 2 and asks whether to proceed to a plan — does NOT auto-emit Phase 3 or apply edits.",
-        "Skill does NOT modify any file before user approval."
+        "Skill does NOT modify any file before user approval.",
+        "Understanding — main result is findable: the first lines of the final output state the result and its status (e.g., audit complete, stopped for approval) without needing to read later sections.",
+        "Understanding — facts and assumptions are separated: verified findings cite the file or line inspected; anything not inspected is marked `unknown` under Not verified, not reported as a finding.",
+        "Understanding — claims are traceable: every finding and posture rating points to quoted evidence that supports exactly its scope; a Phase 2 report does not imply that anything was fixed.",
+        "Understanding — next decision is clear: the output ends by naming the required choice (plan it, plan a subset, or stop here)."
       ]
     },
     {
@@ -26,7 +30,11 @@
         "Every change in the plan has a Diff block (unified diff format), an Impact statement naming a downside, and a Reversibility line.",
         "Skill recognizes the subset approval ('only npm') and applies ONLY npm-prefixed changes in Phase 4.",
         "Skill does NOT modify the Dockerfile or workflow YAML.",
-        "Phase 4 completion report lists the actual files modified and confirms commit is left to the user."
+        "Phase 4 completion report lists the actual files modified and confirms commit is left to the user.",
+        "Understanding — main result is findable: the Phase 4 report states which changes were applied and which were skipped before any detail.",
+        "Understanding — facts and assumptions are separated: sanity checks that were run are reported with their observed result; skipped or untested checks appear on the Not verified line.",
+        "Understanding — claims are traceable: each applied change cites its finding ID and the `git diff` that landed; plan approval is not reported as a passing build.",
+        "Understanding — next decision is clear: the output names the remaining user action (review the diff, then commit or revert) and states that no further approval is pending."
       ]
     },
     {
@@ -37,7 +45,11 @@
         "Skill detects that no supported ecosystem manifest exists (no package.json, no pyproject.toml/requirements.txt, no Dockerfile, no .github/workflows).",
         "Skill exits cleanly with a short message that nothing is auditable.",
         "Skill does NOT fabricate findings or invent files that aren't present.",
-        "Skill does NOT proceed to Phase 2, 3, or 4."
+        "Skill does NOT proceed to Phase 2, 3, or 4.",
+        "Understanding — main result is findable: the single message states that nothing is auditable.",
+        "Understanding — facts and assumptions are separated: the message names the manifest types that were checked rather than guessing at project type.",
+        "Understanding — claims are traceable: the no-ecosystem result is tied to the detection check (helper exit code 2 or the files inspected).",
+        "Understanding — next decision is clear: the message tells the user how to proceed (point the skill at a subdirectory with manifests) or that no action is needed."
       ]
     }
   ]

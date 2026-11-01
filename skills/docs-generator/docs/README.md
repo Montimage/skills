@@ -33,12 +33,13 @@
 
 ```mermaid
 graph TD
-    A["Analyze Project Type"] --> B["Restructure Root README"]
-    B --> C["Add Component READMEs"]
-    C --> D["Organize docs/ Directory"]
-    D --> E["Create Mermaid Diagrams"]
+    A["Create Feature Branch"] --> B["Analyze Project Type"]
+    B --> C["Restructure READMEs and docs/"]
+    C --> D["Create Mermaid Diagrams"]
+    D --> E["Validate Links and Commands"]
+    E --> F["Report Results"]
     style A fill:#4CAF50,color:#fff
-    style E fill:#2196F3,color:#fff
+    style F fill:#2196F3,color:#fff
 ```
 
 ## Usage
@@ -47,6 +48,12 @@ graph TD
 /docs-generator
 ```
 
+## Resources
+
+| Path | Description |
+| --- | --- |
+| `references/doc-targets.md` | Required content per README/docs page, page-selection rule, Mermaid example, writing guidelines |
+
 ## Output
 
-Creates a structured documentation hierarchy including a streamlined root README.md, component-level READMEs, and a `docs/` directory with architecture, API reference, deployment, development, and troubleshooting guides as applicable.
+Creates a structured documentation hierarchy including a streamlined root README.md, component-level READMEs, and a `docs/` directory with architecture, API reference, deployment, development, and troubleshooting guides as applicable, plus a short summary of the result, the checks run, anything left unverified, and any approval still needed.

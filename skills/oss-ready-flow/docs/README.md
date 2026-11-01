@@ -7,13 +7,41 @@
 
 # OSS Ready Flow
 
-> Coordinate an end-to-end OSS release flow with six sequential steps and user checkpoints.
+> Prepare an end-to-end OSS release flow covering audit, branches, docs, README, publications, and optional Pages, with a user checkpoint after every step.
 
-**Author:** Montimage
+**Author:** Montimage · **Version:** 1.6.0 · **Depends on:** `oss-ready`
 
-End-to-end orchestrator that takes a project from its current state to OSS-ready in 6 sequential steps, with one sub-agent per step and a user checkpoint between every step.
+## Highlights
 
-## What it does
+- Six sequential steps, one sub-agent per step, and a user checkpoint (`yes / skip / stop`) between steps
+- Plan-only branch cleanup with per-branch approval; never force-pushes or commits for you
+- Durable, append-only reports in `.oss-ready/` so a run can resume across sessions
+- Final Summary that states the result, evidence, uncertainty, and the next decision
+
+## When to Use
+
+| Say this... | Skill will... |
+| --- | --- |
+| "Make this project open source end-to-end" | Run the full six-step flow from audit to optional landing page |
+| "Full OSS prep for this repo" | Audit, clean branches, generate docs, and polish the README |
+| "Clean up branches as part of the OSS release" | Start at the audit, then plan per-branch merge/delete/keep decisions |
+
+**Don't use for** audit-only checks (use `oss-ready` directly), single-doc or README-only edits, or marketing sites.
+
+## How It Works
+
+```mermaid
+graph TD
+    A["Preflight: acquire oss-ready, Repo Sync"] --> B["1. Audit (oss-ready checklist)"]
+    B --> C["2. Branch cleanup (per-branch approval)"]
+    C --> D["3. Standard docs (plan, then write)"]
+    D --> E["4. README polish"]
+    E --> F["5. Related publications"]
+    F --> G["6. Optional GitHub Pages landing page"]
+    G --> H["7. Final Summary"]
+    style A fill:#4CAF50,color:#fff
+    style H fill:#2196F3,color:#fff
+```
 
 | Step | Action | Sub-agent | Output |
 |------|--------|-----------|--------|
@@ -24,11 +52,13 @@ End-to-end orchestrator that takes a project from its current state to OSS-ready
 | 5 | Related publications collection | Publications Researcher | `.oss-ready/05-publications.md` |
 | 6 | Optional GitHub Pages landing page | Landing Page Builder | `.oss-ready/06-landing-page.md` |
 
-## When to use
+## Usage
 
-Trigger phrases: "make this project open source end-to-end", "full OSS prep", "OSS release workflow".
+```
+/oss-ready-flow
+```
 
-**Don't use for** one-off doc edits, single-file README rewrites, or audit-only checks. For an audit only, use the `oss-ready` skill directly. For just documentation reorganization, use `docs-generator`.
+Requires `git`, the `asm` CLI (`npm install -g agent-skill-manager`), and the `oss-ready` skill; `gh` is optional for GitHub-side checks.
 
 ## Safety model
 
@@ -40,15 +70,20 @@ Trigger phrases: "make this project open source end-to-end", "full OSS prep", "O
 ## How it relates to other skills
 
 - **Wraps:** `oss-ready` (for the step-1 audit). The `oss-ready` skill remains usable on its own.
-- **Reuses templates from:** `oss-ready/assets/` (LICENSE, CODE_OF_CONDUCT.md, SECURITY.md, GitHub templates).
-- **Coordinates with:** `docs-generator` for step 3 if the user prefers full doc restructuring.
+- **Reuses templates from:** `oss-ready`'s `assets/` directory (LICENSE, CODE_OF_CONDUCT.md, SECURITY.md, GitHub templates), resolved through `asm deps acquire`.
 
-## Restartability
+## Resources
 
-If the user pauses or the session ends, `.oss-ready/` is the source of truth. Re-invoking the skill reads what's there and asks where to resume.
+| Path | Description |
+| --- | --- |
+| `SKILL.md` | The skill instructions (read by the agent) |
+| `references/sub-agent-briefs.md` | Verbatim brief for each step's sub-agent and the dispatch rules |
+| `references/expected-output.md` | Target layout, Step Completion Reports, Final Summary, review criteria |
+| `references/edge-cases.md` | Edge cases and recovery |
+| `references/assets-resolution.md` | `oss-ready` asset check and template copy commands |
+| `references/safety-model.md` | Full approval and refusal rules |
+| `evals/evals.json` | Trigger, negative-trigger, and Final Summary eval cases |
 
-## Files in this skill
+## Output
 
-- `SKILL.md` — the skill instructions (read by the agent)
-- `README.md` — this file
-- `evals/evals.json` — minimal smoke test
+A `.oss-ready/` directory of per-step reports in the target repo, standard docs under `docs/`, a polished README with a Related Publications section, an optional GitHub Pages scaffold, and a Final Summary listing results, evidence, open uncertainty, and the commit for the user to run.

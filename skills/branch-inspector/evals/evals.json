@@ -9,7 +9,10 @@
         "Output includes a 'What this branch implements' section drawn from the diff, not just stats.",
         "Output reports merge status including a cherry-equivalent / squash-merge check.",
         "Output presents four explicit options (delete, archive, open PR, keep) and asks the user to choose before acting.",
-        "Skill does NOT execute destructive git commands automatically."
+        "Skill does NOT execute destructive git commands automatically.",
+        "The Recommendation and Reasoning lines state the result without requiring the reader to open the diff.",
+        "An Uncertainty line lists skipped checks and inferred fields (or says none), separate from facts read from git.",
+        "Each notable finding names a file, commit, or command result that supports it."
       ]
     },
     {
@@ -27,7 +30,8 @@
         "Overview is produced before the plan.",
         "When the archive decision is given, plan uses tag-and-delete: creates archive/<branch> tag, pushes the tag, deletes local and remote branch.",
         "Plan includes a recovery note explaining how to restore the branch from the archive tag.",
-        "Skill lists commands but does not execute them."
+        "Skill lists commands but does not execute them.",
+        "The plan ends with an 'Approval needed:' line naming the commands the user must run or approve."
       ]
     }
   ]
